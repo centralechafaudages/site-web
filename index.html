@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Échafaudages B2B | Central Échafaudages | + de 20 ans d'expérience chantier</title>
+    <meta name="description" content="Location d'échafaudages pour professionnels du bâtiment en Île-de-France. Étude, dimensionnement et gestion clé en main.">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        :root {
+            --primary-blue: #0033A0;
+            --primary-orange: #FF6600;
+            
+            --bg-pastel-blue: #EDF2FA;
+            --bg-pastel-orange: #FFF8F1;
+            
+            --text-dark-blue: #0A2540;
+            --text-light: #666666;
+            
+            --white: #FFFFFF;
+            --off-white: #F8F9FA; 
+            
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        /* --- FOND GLOBAL BLANC --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--white);
+            color: var(--text-dark-blue);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--white);
+            padding: 15px 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03); 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-img {
+            max-height: 50px;
+            width: auto;
+            display: block;
+        }
+
+        .header-phone-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: transparent;
+            border: 2px solid var(--primary-orange);
+            color: var(--primary-orange);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .header-phone-btn:hover {
+            background-color: var(--primary-orange);
+            color: var(--white);
+        }
+
+        /* --- SECTION HERO --- */
+        .hero {
+            background-color: var(--white);
+            padding: 60px 5%;
+            display: flex;
+            align-items: stretch; /* Les 2 blocs font la même hauteur */
+            justify-content: center;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* CADRE TEXTE (GAUCHE) */
+        .hero-content {
+            flex: 1;
+            background-color: var(--bg-pastel-blue);
+            padding: 50px 40px;
+            border-radius: 16px;
+            color: var(--text-dark-blue);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .hero-content h1 {
+            color: var(--primary-blue);
+            font-size: 38px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero-content p {
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .badge-icon {
+            color: var(--primary-orange);
+            font-size: 24px;
+        }
+
+        .mobile-cta {
+            display: none;
+            background: var(--primary-orange);
+            color: var(--white);
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+        }
+
+        /* CADRE FORMULAIRE (DROITE) */
+        .hero-form-wrapper {
+            flex: 1;
+            background-color: var(--bg-pastel-orange);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-form-wrapper h2 {
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group { margin-bottom: 15px; }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .required { color: var(--primary-orange); }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background: var(--white);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+        }
+
+        textarea { resize: vertical; min-height: 80px; }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--primary-orange);
+            color: var(--white);
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover { 
+            background: #e55a00; 
+            transform: translateY(-2px);
+        }
+
+        /* --- 3 PILIERS (CARTES FLOTTANTES) --- */
+        .pillars { padding: 60px 5%; text-align: center; max-width: 1400px; margin: 0 auto; }
+        .pillars h2 { color: var(--primary-blue); margin-bottom: 50px; font-size: 32px; }
+        
+        .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
+        
+        .pillar-card { 
+            background: var(--off-white); 
+            padding: 40px 30px; 
+            border-radius: 16px; 
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease;
+        }
+        .pillar-card:hover { transform: translateY(-5px); }
+        .pillar-icon { font-size: 40px; margin-bottom: 20px; }
+        .pillar-card h3 { color: var(--primary-blue); margin-bottom: 15px; font-size: 20px; }
+        .pillar-card p { color: var(--text-light); font-size: 15px; }
+
+        /* --- EXPERTISE (BLOC FLOTTANT UNIQUE) --- */
+        .expertise { padding: 60px 5%; max-width: 1400px; margin: 0 auto; }
+        
+        .expertise-container { 
+            background: var(--off-white);
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: var(--shadow-soft);
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 50px; 
+            align-items: center; 
+        }
+
+        .expertise-image { width: 100%; height: 400px; background: #e9ecef; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #999; overflow: hidden; }
+        .expertise-image img { width: 100%; height: 100%; object-fit: cover; }
+        .expertise-content h2 { color: var(--primary-blue); margin-bottom: 20px; font-size: 32px; line-height: 1.2; }
+        .expertise-content p { color: var(--text-light); margin-bottom: 25px; font-size: 16px; }
+        .linkedin-btn { background: var(--primary-blue); color: var(--white); padding: 12px 24px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+
+        /* --- STRUCTURES MOBILISÉES (CARTES FLOTTANTES) --- */
+        .structures { padding: 60px 5%; text-align: center; max-width: 1400px; margin: 0 auto; }
+        .structures h2 { color: var(--primary-blue); margin-bottom: 15px; font-size: 32px; }
+        .structures > p { color: var(--text-light); margin-bottom: 50px; font-size: 16px; max-width: 700px; margin: 0 auto; }
+        
+        .structures-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        .structure-card { position: relative; border-radius: 16px; overflow: hidden; height: 280px; box-shadow: var(--shadow-soft); }
+        .structure-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .structure-card:hover img { transform: scale(1.05); }
+        .structure-title { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0, 51, 160, 0.9)); color: var(--white); padding: 40px 20px 20px; font-weight: bold; font-size: 18px; text-align: left; }
+
+        /* --- SEO LOCAL --- */
+        .seo-local { padding: 60px 5% 80px; text-align: center; max-width: 1400px; margin: 0 auto; }
+        .seo-local h2 { color: var(--text-dark-blue); margin-bottom: 20px; font-size: 24px; }
+        .seo-local p { color: var(--text-light); font-size: 15px; max-width: 800px; margin: 0 auto; }
+
+        /* --- FOOTER AMINCI --- */
+        footer { 
+            background: #1A2530; 
+            color: var(--white); 
+            padding: 40px 20px 20px; /* Marges réduites */
+            text-align: center; 
+        }
+        
+        .footer-company { 
+            font-size: 24px; /* Plus discret */
+            font-weight: 800; 
+            color: var(--white); 
+            margin-bottom: 5px; 
+            letter-spacing: 0.5px; 
+        }
+        
+        .footer-phone { 
+            font-size: 20px; 
+            color: var(--white); 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+            display: block; 
+            text-decoration: none; 
+        }
+        
+        .footer-email { 
+            font-size: 16px; 
+            color: var(--primary-orange); 
+            font-weight: bold; 
+            text-decoration: none; 
+            display: block; 
+            margin-bottom: 15px; 
+        }
+        
+        .footer-links { 
+            margin-top: 20px; 
+            padding-top: 15px; 
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;             /* Alignement horizontal sur PC */
+            justify-content: center; 
+            gap: 30px; 
+        }
+        
+        .footer-links a { 
+            color: #aaa; 
+            text-decoration: none; 
+            font-size: 14px; 
+        }
+        
+        .footer-links a:hover { 
+            color: var(--white); 
+        }
+
+        /* --- NOTIFICATIONS --- */
+        .success-message { display: none; background: #e8f5e9; color: #2e7d32; padding: 15px; border-radius: 8px; text-align: center; margin-top: 15px; font-weight: bold; }
+        .error-message { display: none; background: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; text-align: center; margin-top: 15px; font-weight: bold; }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 950px) {
+            header { justify-content: center; gap: 20px; }
+            .hero { flex-direction: column; padding: 40px 5%; gap: 30px; }
+            .hero-content, .hero-form-wrapper { width: 100%; padding: 40px 20px; text-align: center; }
+            .hero-badges { align-items: center; }
+            .mobile-cta { display: inline-block; }
+            .expertise-container { grid-template-columns: 1fr; padding: 30px 20px; text-align: center; }
+            .form-row { grid-template-columns: 1fr; }
+            
+            /* Les liens du footer s'empilent sur mobile */
+            .footer-links { 
+                flex-direction: column; 
+                gap: 12px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/">
+            <img src="logo.png" alt="Logo Central Échafaudages" class="logo-img">
+        </a>
+        <a href="tel:0189480928" class="header-phone-btn">
+            📞 01 89 48 09 28
+        </a>
+    </header>
+
+    <section class="hero">
+        
+        <div class="hero-content">
+            <h1>Location d'échafaudages pour les pros du BTP</h1>
+            <p>Ne perdez plus de temps à chercher du matériel et des monteurs. Confiez-nous vos contraintes, nous mobilisons l'échafaudage exact pour votre chantier en Île-de-France.</p>
+            
+            <a href="#formulaire" class="mobile-cta">Demander mon devis</a>
+            
+            <div class="hero-badges">
+                <div class="badge"><span class="badge-icon">⏱️</span> Devis express sous 2H</div>
+                <div class="badge"><span class="badge-icon">🏗️</span> Tous corps d'état (Couverture, ITE, Ravalement)</div>
+                <div class="badge"><span class="badge-icon">✅</span> Matériel certifié & Montage réglementaire</div>
+            </div>
+        </div>
+
+        <div class="hero-form-wrapper" id="formulaire">
+            <h2>Demande de chiffrage</h2>
+            <form id="devisForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Prénom <span class="required">*</span></label>
+                        <input type="text" name="prenom" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom <span class="required">*</span></label>
+                        <input type="text" name="nom" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Téléphone <span class="required">*</span></label>
+                        <input type="tel" name="telephone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email <span class="required">*</span></label>
+                        <input type="email" name="email" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                        <label>Entreprise</label>
+                        <input type="text" name="entreprise" placeholder="Nom de votre société">
+                </div>
+                
+                <div class="form-group">
+                    <label>Adresse du chantier <span class="required">*</span></label>
+                    <input type="text" name="adresse" required placeholder="Code postal et ville minimum">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type de travaux <span class="required">*</span></label>
+                        <select name="type_travaux" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="Couverture">Toiture / Couverture</option>
+                            <option value="Ravalement">Ravalement standard</option>
+                            <option value="Isolation">Isolation (ITE)</option>
+                            <option value="Autre">Autre Accès</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Démarrage prévu</label>
+                        <input type="date" name="date_demarrage">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Description du projet</label>
+                    <textarea name="description" placeholder="Décrivez votre besoin (hauteur, contraintes d'accès, etc.)"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Envoyer ma demande</button>
+            </form>
+            
+            <div class="success-message" id="successMsg">✅ Demande envoyée. Notre expert vous rappelle très vite.</div>
+            <div class="error-message" id="errorMsg">❌ Erreur de connexion. Veuillez nous appeler.</div>
+        </div>
+    </section>
+
+    <section class="pillars">
+        <h2>Nos engagements chantiers</h2>
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <div class="pillar-icon">📐</div>
+                <h3>Étude & Dimensionnement</h3>
+                <p>Couverture, ITE, ou ravalement complexe : nous concevons l'échafaudage exact pour votre corps d'état, validé par nos 20 ans d'expérience.</p>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-icon">🤝</div>
+                <h3>Réseau Qualifié</h3>
+                <p>Nous mobilisons les meilleurs parcs matériels et équipes de montage d'Île-de-France. Matériel certifié et monteurs agréés.</p>
+            </div>
+            <div class="pillar-card">
+                <div class="pillar-icon">🔑</div>
+                <h3>Gestion Clé en main</h3>
+                <p>De la demande d'autorisation de voirie au PV de réception après montage, nous coordonnons l'ensemble de la prestation.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="expertise">
+        <div class="expertise-container">
+            <div class="expertise-image">
+                <span>[ Insérez ici votre photo sur chantier ]</span>
+            </div>
+            <div class="expertise-content">
+                <h2>La fiabilité par l'expérience terrain</h2>
+                <p>Fondé par Michel Kesraoui, expert des échafaudages depuis plus de 20 ans.</p>
+                <p>"Parce que je connais la réalité de vos chantiers, je sais qu'un échafaudage inadapté ou livré en retard paralyse vos équipes. Ma mission : vous apporter la certitude technique, logistique et réglementaire pour travailler en toute sécurité."</p>
+                <a href="https://linkedin.com/in/votre-profil" target="_blank" class="linkedin-btn">Voir le parcours sur LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="structures">
+        <h2>Les structures mobilisées par notre réseau</h2>
+        <p>Grâce à nos partenaires de confiance, nous déployons le matériel parfaitement dimensionné à vos contraintes techniques.</p>
+        
+        <div class="structures-grid">
+            <div class="structure-card">
+                <img src="photo-couverture.jpg" alt="Échafaudage de toiture">
+                <div class="structure-title">Échafaudages de Couverture</div>
+            </div>
+            <div class="structure-card">
+                <img src="photo-ravalement.jpg" alt="Échafaudage de pied pour ravalement">
+                <div class="structure-title">Échafaudages de Pied (Ravalement & ITE)</div>
+            </div>
+            <div class="structure-card">
+                <img src="photo-acces-complexe.jpg" alt="Structure métallique accès difficile">
+                <div class="structure-title">Accès Complexes & Sur-mesure</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seo-local">
+        <h2>Présents sur tous vos chantiers en Île-de-France</h2>
+        <p>Nous accompagnons les professionnels du bâtiment pour la location et le montage d'échafaudages sur toute la région : Paris (75), Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94), Seine-et-Marne (77), Yvelines (78), Essonne (91) et Val-d'Oise (95).</p>
+    </section>
+
+    <footer>
+        <div class="footer-company">Central Échafaudages</div>
+        <a href="tel:0189480928" class="footer-phone">01 89 48 09 28</a>
+        <a href="mailto:etudes@centralechafaudages.fr" class="footer-email">etudes@centralechafaudages.fr</a>
+        
+        <div class="footer-links">
+            <a href="mentions-legales.html">Mentions légales</a>
+            <a href="cgv.html">Conditions Générales de Vente</a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('devisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            document.getElementById('successMsg').style.display = 'none';
+            document.getElementById('errorMsg').style.display = 'none';
+            
+            const btn = document.querySelector('.submit-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "Envoi en cours...";
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            fetch('https://script.google.com/macros/s/AKfycbzIUaKDwAMorp62w_i3pYatHHRLqZD-zJAOoQ1wCouH-dZQ0KGXpRdaWjb54f8siNemhg/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                document.getElementById('successMsg').style.display = 'block';
+                document.getElementById('devisForm').reset();
+            })
+            .catch(() => {
+                document.getElementById('errorMsg').style.display = 'block';
+            })
+            .finally(() => {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
+        });
+    </script>
+
+</body>
+</html>
