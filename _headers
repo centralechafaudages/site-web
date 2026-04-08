@@ -1,0 +1,82 @@
+##############################################################
+#  Central Échafaudages — Headers de sécurité HTTP
+#  Format Netlify (_headers à la racine du dossier publié)
+##############################################################
+
+/*
+  # ── Content-Security-Policy ────────────────────────────────
+  #
+  # ✅ unsafe-inline SUPPRIMÉ de style-src
+  #    Le CSS est désormais dans style.css (fichier externe).
+  #
+  # ✅ unsafe-inline absent de script-src (JS dans main.js)
+  #
+  # ✅ d3js.org absent de script-src (D3 chargé depuis cdnjs)
+  #
+  # ✅ /.netlify/functions/ ajouté à connect-src
+  #    Le formulaire appelle notre proxy, pas GAS directement.
+  #    L'URL GAS n'est plus exposée dans le code client.
+  #
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; img-src * data: blob:; font-src https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';
+
+  # ── Anti-clickjacking ──────────────────────────────────────
+  X-Frame-Options: DENY
+
+  # ── Anti-MIME-sniffing ─────────────────────────────────────
+  X-Content-Type-Options: nosniff
+
+  # ── Referrer ───────────────────────────────────────────────
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # ── Permissions navigateur ─────────────────────────────────
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+  # ── HTTPS obligatoire 1 an ─────────────────────────────────
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+  # ── Supprime la signature serveur ──────────────────────────
+  X-Powered-By:
+
+##############################################################
+#  AUDIT SÉCURITÉ — état final
+#
+#  ✅ CSP stricte à 100 % : plus d'unsafe-inline nulle part
+#  ✅ URL GAS masquée côté client (variable d'env Netlify)
+#  ✅ Vraie réponse HTTP — plus de faux positif no-cors
+#  ✅ Validation double : client (main.js) + serveur (submit.js)
+#  ✅ Token secret dans le payload (FORM_TOKEN)
+#  ✅ SRI sur D3.js
+#  ✅ Honeypot anti-bot
+#  ✅ Tous les champs ont maxlength
+#  ✅ font-size >= 16px sur les inputs (évite zoom iOS)
+#  ✅ scroll-snap proximity mobile / mandatory desktop
+#  ✅ Pas de console.log en production
+#  ✅ Pas d'alert() — erreurs inline accessibles (role=alert)
+#  ✅ Headers serveur corrects (pas de meta X-Frame-Options)
+#
+#  ⚠️  RESTE À FAIRE (côté Google Apps Script)
+#     Vérifier le token FORM_TOKEN dans doPost(e) :
+#
+#     function doPost(e) {
+#       var props  = PropertiesService.getScriptProperties();
+#       var secret = props.getProperty('FORM_TOKEN');
+#       var data   = JSON.parse(e.postData.contents);
+#       if (!data || data.token !== secret) {
+#         return ContentService
+#           .createTextOutput(JSON.stringify({ error: 'Token invalide' }))
+#           .setMimeType(ContentService.MimeType.JSON);
+#       }
+#       // ... votre code Sheets + Trello existant ...
+#       return ContentService
+#         .createTextOutput(JSON.stringify({ status: 'ok' }))
+#         .setMimeType(ContentService.MimeType.JSON);
+#     }
+#
+##############################################################
+#  DÉPLOIEMENT — variables d'environnement à configurer
+#  dans Netlify > Site settings > Environment variables :
+#
+#  GAS_URL    = https://script.google.com/macros/s/VOTRE_ID/exec
+#  FORM_TOKEN = votre_chaine_secrete_longue
+#
+##############################################################

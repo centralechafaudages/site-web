@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Échafaudages | Expertise & Sécurité Île-de-France</title>
+    <meta name="description" content="Location et montage d'échafaudages B2B en Île-de-France. Étude technique, voirie, conformité NF. Michel Kesraoui, 20 ans d'expertise terrain.">
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+     SÉCURITÉ : headers HTTP dans _headers (Netlify).
+     CSS externalisé dans style.css → 'unsafe-inline' supprimé
+     de style-src dans la CSP.
+    ═══════════════════════════════════════════════════════════════
+    -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,400&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS externe — supprime unsafe-inline de la CSP -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- D3.js — SRI, chargé depuis cdnjs uniquement -->
+    <script defer
+        src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"
+        integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer">
+    </script>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="#home" class="logo-link" aria-label="Central Échafaudages — accueil">
+                    <img src="logo.png" alt="Central Échafaudages" class="logo-img"
+                         width="160" height="40" loading="eager">
+                </a>
+                <a href="tel:0189480928" class="btn-call-header">01 89 48 09 28</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── HOME ─────────────────────────────────────────────── -->
+    <section id="home" aria-labelledby="home-h1">
+        <div class="container">
+            <div class="badge" aria-hidden="true">🛡️ 20 ans d'expertise terrain</div>
+            <h1 id="home-h1">
+                La sécurité de vos équipes,<br>
+                <span class="txt-orange">notre priorité absolue.</span>
+            </h1>
+            <p class="lead">Étude technique, voirie et coordination complète. Une solution clé en main pour vos chantiers en Île-de-France.</p>
+            <nav class="home-btns" aria-label="Actions principales">
+                <a href="#contact" class="btn-main btn-orange">Devis express</a>
+                <a href="#expert"  class="btn-main btn-blue">Nos engagements</a>
+            </nav>
+        </div>
+    </section>
+
+    <!-- ── EXPERT ───────────────────────────────────────────── -->
+    <section id="expert" aria-labelledby="expert-h2">
+        <div class="container">
+            <h2 id="expert-h2">La maîtrise du terrain</h2>
+            <div class="cards-grid">
+                <div class="card-dark">
+                    <span class="card-num">01 — Étude &amp; diagnostic</span>
+                    <h3>Dimensionnement sur mesure</h3>
+                    <p>Analyse de votre projet pour anticiper les besoins techniques. Pas de surprise au montage.</p>
+                </div>
+                <div class="card-dark">
+                    <span class="card-num">02 — Logistique &amp; voirie</span>
+                    <h3>Coordination complète</h3>
+                    <p>Gestion des autorisations de voirie et planification rigoureuse pour la fluidité de vos chantiers.</p>
+                </div>
+                <div class="card-dark">
+                    <span class="card-num">03 — Sécurité &amp; conformité</span>
+                    <h3>PV de réception systématique</h3>
+                    <p>Contrôles à l'implantation et édition du PV de réception. Normes NF garanties.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── PHOTOS ───────────────────────────────────────────── -->
+    <section id="photos" aria-labelledby="photos-h2">
+        <div class="container">
+            <h2 id="photos-h2">Domaines d'intervention</h2>
+            <div class="photos-grid">
+                <div class="photo-card">
+                    <img src="photo-couverture.jpg"
+                         alt="Échafaudage pour travaux de toiture et couverture"
+                         loading="lazy" width="600" height="600">
+                    <div class="photo-label" aria-hidden="true">Toiture &amp; couverture</div>
+                </div>
+                <div class="photo-card">
+                    <img src="photo-ravalement.jpg"
+                         alt="Échafaudage pour ravalement de façade"
+                         loading="lazy" width="600" height="600">
+                    <div class="photo-label" aria-hidden="true">Ravalement</div>
+                </div>
+                <div class="photo-card">
+                    <img src="photo-isolation.jpg"
+                         alt="Échafaudage pour isolation thermique extérieure ITE"
+                         loading="lazy" width="600" height="600">
+                    <div class="photo-label" aria-hidden="true">Isolation ITE</div>
+                </div>
+                <div class="photo-card">
+                    <img src="photo-acces-complexe.jpg"
+                         alt="Échafaudage pour accès difficiles en milieu urbain dense"
+                         loading="lazy" width="600" height="600">
+                    <div class="photo-label" aria-hidden="true">Accès complexes</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CARTE ────────────────────────────────────────────── -->
+    <section id="carte" aria-labelledby="carte-h2">
+        <div class="container">
+            <div class="carte-layout">
+                <div class="carte-text">
+                    <h2 id="carte-h2">Proximité<br>Île-de-France</h2>
+                    <p>Intervention réactive sur les 8 départements franciliens.</p>
+                </div>
+                <svg id="idf-svg" viewBox="0 0 500 500"
+                     role="img"
+                     aria-labelledby="idf-title idf-desc">
+                    <title id="idf-title">Carte Île-de-France</title>
+                    <desc id="idf-desc">Carte des 8 départements couverts : Paris (75), Seine-et-Marne (77), Yvelines (78), Essonne (91), Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94), Val-d'Oise (95).</desc>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CONTACT ──────────────────────────────────────────── -->
+    <section id="contact" aria-labelledby="contact-h2">
+        <div class="container">
+            <div class="contact-layout">
+
+                <div class="contact-quote" id="contact-quote">
+                    <p class="kicker">L'expertise technique</p>
+                    <blockquote>
+                        <p>"Je connais la réalité de vos chantiers.</p>
+                        <p>Ma mission : vous apporter la certitude technique, logistique et réglementaire pour travailler en toute sécurité."</p>
+                    </blockquote>
+                    <p class="founder">Michel Kesraoui — Fondateur</p>
+                </div>
+
+                <div class="form-box" id="form-box">
+
+                    <button class="form-close-btn" id="form-close-btn" type="button"
+                            aria-label="Réduire le formulaire">
+                        ← Réduire
+                    </button>
+
+                    <h2 id="contact-h2">Votre demande de devis</h2>
+
+                    <form id="devisForm" novalidate>
+
+                        <!-- Honeypot anti-bot -->
+                        <div aria-hidden="true" class="hp-wrap">
+                            <label for="hp_url">Ne pas remplir</label>
+                            <input type="text" id="hp_url" name="hp_url"
+                                   tabindex="-1" autocomplete="off" value="">
+                        </div>
+
+                        <!-- ── Étape 1 ──────────────────────── -->
+                        <div id="step-1" class="form-section">
+
+                            <fieldset class="fieldset-clean">
+                                <legend class="field-label">Type de travaux *</legend>
+                                <div class="radio-grid">
+                                    <div>
+                                        <input type="radio" name="type_travaux" value="Couverture"
+                                               id="w1" class="radio-input" required>
+                                        <label for="w1" class="radio-label">🏠 Toiture</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="type_travaux" value="Façade"
+                                               id="w2" class="radio-input">
+                                        <label for="w2" class="radio-label">🏢 Façade</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="type_travaux" value="Ravalement"
+                                               id="w3" class="radio-input">
+                                        <label for="w3" class="radio-label">🎨 Ravalement</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="type_travaux" value="Autre"
+                                               id="w4" class="radio-input">
+                                        <label for="w4" class="radio-label">🛠️ Autre</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div>
+                                <label for="adresse" class="field-label">Localisation du chantier *</label>
+                                <input type="text" id="adresse" name="adresse"
+                                    placeholder="Ville ou code postal"
+                                    class="text-input"
+                                    required maxlength="100"
+                                    autocomplete="postal-code"
+                                    aria-required="true">
+                            </div>
+
+                            <div id="error-step1" class="form-error hidden"
+                                 role="alert" aria-live="assertive"></div>
+
+                            <button type="button" id="next-btn" class="btn-submit">
+                                Continuer →
+                            </button>
+                        </div>
+
+                        <!-- ── Étape 2 ──────────────────────── -->
+                        <div id="step-2" class="form-section hidden">
+
+                            <div>
+                                <label for="nom" class="field-label">Prénom &amp; nom *</label>
+                                <input type="text" id="nom" name="nom"
+                                    placeholder="Marie Dupont" class="text-input"
+                                    required maxlength="60"
+                                    autocomplete="name" aria-required="true">
+                            </div>
+                            <div>
+                                <label for="entreprise" class="field-label">Entreprise *</label>
+                                <input type="text" id="entreprise" name="entreprise"
+                                    placeholder="Dupont Couverture SARL" class="text-input"
+                                    required maxlength="100"
+                                    autocomplete="organization" aria-required="true">
+                            </div>
+                            <div>
+                                <label for="email" class="field-label">Email professionnel *</label>
+                                <input type="email" id="email" name="email"
+                                    placeholder="marie@dupont-couverture.fr" class="text-input"
+                                    required maxlength="100"
+                                    autocomplete="email" aria-required="true">
+                            </div>
+                            <div>
+                                <label for="telephone" class="field-label">Téléphone direct *</label>
+                                <input type="tel" id="telephone" name="telephone"
+                                    placeholder="06 12 34 56 78" class="text-input"
+                                    required maxlength="20"
+                                    autocomplete="tel" aria-required="true">
+                            </div>
+
+                            <div class="rgpd-row">
+                                <input type="checkbox" id="rgpd" name="rgpd_consent"
+                                       required aria-required="true">
+                                <label for="rgpd">
+                                    J'accepte que mes données soient utilisées pour traiter
+                                    ma demande, conformément à la
+                                    <a href="politique-confidentialite.html"
+                                       target="_blank" rel="noopener noreferrer">
+                                        politique de confidentialité
+                                    </a>.
+                                </label>
+                            </div>
+
+                            <div id="error-step2" class="form-error hidden"
+                                 role="alert" aria-live="assertive"></div>
+
+                            <div class="step2-btns">
+                                <button type="button" id="prev-btn" class="btn-back"
+                                        aria-label="Retour à l'étape précédente">
+                                    ← Retour
+                                </button>
+                                <button type="submit" id="submit-btn"
+                                        class="btn-submit btn-submit-flex">
+                                    Envoyer
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div id="successMsg" class="success-msg hidden"
+                         role="status" aria-live="polite" aria-atomic="true">
+                        ✅ Demande transmise à Michel Kesraoui.<br>
+                        Vous serez contacté rapidement.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ───────────────────────────────────────────── -->
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <p class="footer-brand">Central échafaudages</p>
+                <a href="mailto:etudes@centralechafaudages.fr" class="footer-email">
+                    etudes@centralechafaudages.fr
+                </a>
+                <nav class="footer-links" aria-label="Liens légaux">
+                    <a href="cgv.html" rel="noopener noreferrer">CGV</a>
+                    <a href="mentions-legales.html" rel="noopener noreferrer">Mentions légales</a>
+                    <a href="politique-confidentialite.html" rel="noopener noreferrer">
+                        Politique de confidentialité
+                    </a>
+                </nav>
+                <p class="footer-copy">&copy; 2026 Central échafaudages — Expert Île-de-France</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+
+</body>
+</html>
