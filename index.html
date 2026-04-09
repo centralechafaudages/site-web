@@ -8,16 +8,20 @@
 
     <!--
     ═══════════════════════════════════════════════════════════════
-     SÉCURITÉ : headers HTTP dans _headers (Cloudflare).
-     CSS externalisé dans style.css.
+     SÉCURITÉ : headers HTTP dans _headers (Netlify).
+     CSS externalisé dans style.css → 'unsafe-inline' supprimé
+     de style-src dans la CSP.
     ═══════════════════════════════════════════════════════════════
     -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,400&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS externe — supprime unsafe-inline de la CSP -->
     <link rel="stylesheet" href="style.css">
 
+    <!-- D3.js — SRI, chargé depuis cdnjs uniquement -->
     <script defer
         src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"
         integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A=="
@@ -27,10 +31,6 @@
 </head>
 <body>
 
-    <!--
-      HEADER MOBILE : logo + téléphone empilés verticalement
-      HEADER DESKTOP : logo à gauche, téléphone à droite
-    -->
     <header>
         <div class="container">
             <div class="header-inner">
@@ -64,25 +64,19 @@
         <div class="container">
             <h2 id="expert-h2">La maîtrise du terrain</h2>
             <div class="cards-grid">
-                <!--
-                  Structure des piliers :
-                  .card-num-big = chiffre isolé, grand, en titre
-                  h3            = titre du pilier
-                  p             = texte descriptif
-                -->
                 <div class="card-dark">
-                    <span class="card-num-big" aria-hidden="true">01</span>
-                    <h3>Étude &amp; diagnostic</h3>
+                    <span class="card-num">01 — Étude &amp; diagnostic</span>
+                    <h3>Dimensionnement sur mesure</h3>
                     <p>Analyse de votre projet pour anticiper les besoins techniques. Pas de surprise au montage.</p>
                 </div>
                 <div class="card-dark">
-                    <span class="card-num-big" aria-hidden="true">02</span>
-                    <h3>Logistique &amp; voirie</h3>
+                    <span class="card-num">02 — Logistique &amp; voirie</span>
+                    <h3>Coordination complète</h3>
                     <p>Gestion des autorisations de voirie et planification rigoureuse pour la fluidité de vos chantiers.</p>
                 </div>
                 <div class="card-dark">
-                    <span class="card-num-big" aria-hidden="true">03</span>
-                    <h3>Sécurité &amp; conformité</h3>
+                    <span class="card-num">03 — Sécurité &amp; conformité</span>
+                    <h3>PV de réception systématique</h3>
                     <p>Contrôles à l'implantation et édition du PV de réception. Normes NF garanties.</p>
                 </div>
             </div>
