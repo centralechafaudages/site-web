@@ -1,453 +1,270 @@
-/* ═══════════════════════════════════════════════════════════════
-   Central Échafaudages — style.css
-   Corrections :
-   - Header mobile : logo + tél empilés
-   - Piliers PC : chiffres grands isolés, textes agrandis
-   - Piliers mobile : polices plus grandes, chiffres isolés
-   - Mot du fondateur : police agrandie, interligne réduit
-   - Carte mobile : agrandie, centrée, texte remonté
-   - Photos : .webp (dans le HTML)
-═══════════════════════════════════════════════════════════════ */
+/**
+ * Central Échafaudages — main.js
+ *
+ * Fonctionnalités :
+ *  1. Navigation formulaire étape 1 → 2
+ *  2. Plein écran formulaire sur mobile
+ *  3. Carte interactive Île-de-France (D3.js)
+ *  4. Envoi via proxy Netlify Function → GAS → Sheets + Trello
+ *     (vrai retour succès/erreur — plus de faux positif no-cors)
+ */
 
-/* ── Reset ──────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+(function () {
+  'use strict';
 
-:root {
-    --blue:   #0033A0;
-    --orange: #FF6600;
-    --dark:   #0f172a;
-    --mid:    #475569;
-    --light:  #f8fafc;
-    --border: #e2e8f0;
-    --w:      70rem;
-    --hh:     64px;   /* header desktop */
-    --hh-mobile: 88px; /* header mobile empilé */
-}
+  /*
+   * ENDPOINT : on passe par notre proxy Netlify Function
+   * plutôt que d'appeler GAS directement depuis le navigateur.
+   * Avantages :
+   *  - On obtient une vraie réponse HTTP (200 / 4xx / 5xx)
+   *  - L'URL GAS n'est plus visible dans le code client
+   *  - On peut afficher un vrai message d'erreur si GAS plante
+   */
+  var SUBMIT_URL = '/submit';
 
-/* ── Scroll-snap ────────────────────────────────────────────── */
-html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
-@media (min-width: 769px) { html { scroll-snap-type: y mandatory; } }
+  /* ──────────────────────────────────────────────────────────────
+   * ERREURS ACCESSIBLES
+   * ────────────────────────────────────────────────────────────── */
+  function showError(id, msg) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    el.focus();
+  }
+  function clearError(id) {
+    var el = document.getElementById(id);
+    if (el) { el.textContent = ''; el.classList.add('hidden'); }
+  }
 
-body {
-    font-family: 'DM Sans', sans-serif;
-    background: #fff; color: var(--dark);
-    line-height: 1.6; overflow-x: hidden;
-}
+  /* ──────────────────────────────────────────────────────────────
+   * PLEIN ÉCRAN FORMULAIRE — mobile uniquement (≤ 768px)
+   * ────────────────────────────────────────────────────────────── */
+  var formBox      = document.getElementById('form-box');
+  var quote        = document.getElementById('contact-quote');
+  var closeBtn     = document.getElementById('form-close-btn');
+  var isFullscreen = false;
 
-/* ── Utilitaires ────────────────────────────────────────────── */
-.sr-only {
-    position: absolute; width: 1px; height: 1px; padding: 0;
-    margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
-    white-space: nowrap; border: 0;
-}
-.hidden { display: none !important; }
-.container { max-width: var(--w); margin: 0 auto; width: 100%; padding: 0 1.5rem; }
+  function enterFullscreen() {
+    if (isFullscreen || window.innerWidth > 768) return;
+    isFullscreen = true;
+    formBox.classList.add('form-fs');
+    if (quote) quote.style.display = 'none';
+    document.body.style.overflow = 'hidden';
+  }
 
-/* ── Header ─────────────────────────────────────────────────── */
-header {
-    position: fixed; top: 0; width: 100%; z-index: 200;
-    background: #fff; border-bottom: 1px solid var(--border);
-    display: flex; align-items: center;
-}
+  function exitFullscreen() {
+    if (!isFullscreen) return;
+    isFullscreen = false;
+    formBox.classList.remove('form-fs');
+    if (quote) quote.style.display = '';
+    document.body.style.overflow = '';
+  }
 
-/*
-  MOBILE : hauteur augmentée pour empiler logo + téléphone
-  DESKTOP : hauteur standard, disposition côte à côte
-*/
-@media (max-width: 768px) {
-    header { height: var(--hh-mobile); }
-    .header-inner {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.35rem;
-        padding: 0.5rem 0;
-    }
-}
-@media (min-width: 769px) {
-    header { height: var(--hh); }
-    .header-inner {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-}
+  if (formBox) {
+    formBox.addEventListener('focusin', function (e) {
+      var tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') {
+        enterFullscreen();
+      }
+    });
+    formBox.addEventListener('click', function (e) {
+      if (e.target.classList.contains('radio-label')) enterFullscreen();
+    });
+  }
 
-.header-inner { display: flex; width: 100%; }
-.logo-link { display: flex; align-items: center; line-height: 0; }
-.logo-img  { height: 2rem; width: auto; display: block; }
-@media (min-width: 769px) { .logo-img { height: 2.6rem; } }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
+      exitFullscreen();
+      var section = document.getElementById('contact');
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 
-.btn-call-header {
-    background: var(--orange); color: #fff;
-    padding: 0.5rem 1.2rem; border-radius: 50px;
-    font-weight: 700; text-decoration: none;
-    line-height: 1; white-space: nowrap;
-    display: flex; align-items: center;
-    transition: background 0.2s;
-}
-/* Taille légèrement réduite sur mobile pour rester compact */
-@media (max-width: 768px) { .btn-call-header { font-size: 0.95rem; } }
-@media (min-width: 769px) { .btn-call-header { font-size: 0.9rem; } }
-.btn-call-header:hover { background: #cc5200; }
-.btn-call-header:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768 && isFullscreen) exitFullscreen();
+  });
 
-/* ── Sections ───────────────────────────────────────────────── */
-section {
-    scroll-snap-align: start; scroll-snap-stop: always;
-    min-height: 100dvh;
-    display: flex; flex-direction: column; justify-content: center;
-}
-/* Compense la hauteur du header selon le breakpoint */
-@media (max-width: 768px)  { section { padding-top: var(--hh-mobile); } }
-@media (min-width: 769px)  { section { padding-top: var(--hh); } }
+  /* ──────────────────────────────────────────────────────────────
+   * NAVIGATION FORMULAIRE
+   * ────────────────────────────────────────────────────────────── */
+  var step1   = document.getElementById('step-1');
+  var step2   = document.getElementById('step-2');
+  var nextBtn = document.getElementById('next-btn');
+  var prevBtn = document.getElementById('prev-btn');
 
-/* ── Typographie ────────────────────────────────────────────── */
-h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(1.85rem, 6vw, 3.5rem);
-    font-weight: 800; color: var(--blue); line-height: 1.12;
-}
-h2 {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(1.35rem, 4vw, 2.2rem);
-    font-weight: 700; color: var(--blue);
-}
-h3 {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    font-weight: 700; color: #fff; margin-bottom: 0.6rem;
-}
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function () {
+      clearError('error-step1');
+      var adresseEl   = document.getElementById('adresse');
+      var typeTravaux = document.querySelector('input[name="type_travaux"]:checked');
 
-/* ── Boutons principaux ─────────────────────────────────────── */
-.btn-main {
-    display: flex; align-items: center; justify-content: center;
-    width: 100%; padding: 1rem 1.5rem; border-radius: 0.8rem;
-    font-family: inherit; font-weight: 700; font-size: 0.95rem;
-    text-decoration: none; text-align: center;
-    text-transform: uppercase; letter-spacing: 0.05em;
-    border: none; cursor: pointer; min-height: 52px;
-    transition: filter 0.2s, transform 0.1s;
-}
-.btn-main:hover  { filter: brightness(1.1); }
-.btn-main:active { transform: scale(0.97); }
-.btn-main:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
-.btn-orange { background: var(--orange); color: #fff; }
-.btn-blue   { background: var(--blue);   color: #fff; }
-@media (min-width: 480px) { .btn-main { width: auto; min-width: 14rem; } }
+      if (!typeTravaux) {
+        showError('error-step1', 'Veuillez sélectionner un type de travaux.');
+        return;
+      }
+      if (!adresseEl || adresseEl.value.trim().length < 2) {
+        showError('error-step1', 'Veuillez indiquer la ville ou le code postal du chantier.');
+        if (adresseEl) adresseEl.focus();
+        return;
+      }
 
-/* ── HOME ───────────────────────────────────────────────────── */
-#home { text-align: center; }
-#home .container {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 1.25rem; padding: 2rem 1.5rem;
-}
-#home .badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: #eff6ff; color: #1e3a8a;
-    padding: 0.45rem 1rem; border-radius: 50px;
-    font-size: 0.78rem; font-weight: 600; border: 1px solid #bfdbfe;
-}
-#home p.lead { color: var(--mid); font-size: 1rem; max-width: 32rem; }
-@media (min-width: 769px) { #home p.lead { font-size: 1.1rem; } }
-.home-btns {
-    display: flex; flex-direction: column;
-    gap: 0.75rem; width: 100%; max-width: 22rem; align-self: center;
-}
-@media (min-width: 480px) {
-    .home-btns { flex-direction: row; max-width: none; justify-content: center; }
-}
-.txt-orange { color: var(--orange); }
+      step1.classList.add('hidden');
+      step2.classList.remove('hidden');
+      var first = step2.querySelector('input:not([type="hidden"])');
+      if (first) first.focus();
+    });
+  }
 
-/* ── EXPERT ─────────────────────────────────────────────────── */
-#expert { background: var(--light); }
-#expert .container { padding: 2rem 1.5rem; }
-#expert h2 { text-align: center; margin-bottom: 1.5rem; }
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function () {
+      clearError('error-step2');
+      step2.classList.add('hidden');
+      step1.classList.remove('hidden');
+      if (nextBtn) nextBtn.focus();
+    });
+  }
 
-.cards-grid { display: grid; gap: 1rem; }
-@media (min-width: 600px) {
-    .cards-grid { grid-template-columns: repeat(3, 1fr); }
-}
+  /* ──────────────────────────────────────────────────────────────
+   * CARTE INTERACTIVE ÎLE-DE-FRANCE (D3.js)
+   * ────────────────────────────────────────────────────────────── */
+  function initMap() {
+    var svgEl = document.getElementById('idf-svg');
+    if (!svgEl || typeof d3 === 'undefined') return;
 
-.card-dark {
-    background: var(--dark);
-    border-radius: 1rem;
-    color: #fff;
-    display: flex; flex-direction: column;
-    overflow: hidden;
-    /* Padding généreux pour que le contenu respire */
-    padding: 2rem 1.75rem;
-}
-/* Carré sur desktop uniquement */
-@media (min-width: 600px) {
-    .card-dark { aspect-ratio: 1; }
-}
+    var codesIDF = ['75', '77', '78', '91', '92', '93', '94', '95'];
 
-/*
-  Chiffre isolé — grand, en titre, orange
-  PC : 4rem   Mobile : 2.5rem
-*/
-.card-num-big {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 800;
-    color: var(--orange);
-    line-height: 1;
-    display: block;
-    margin-bottom: 0.75rem;
-    font-size: 2.5rem; /* mobile */
-}
-@media (min-width: 600px) {
-    .card-num-big { font-size: 4rem; margin-bottom: 0.5rem; }
-}
+    d3.json('./idf.geojson').then(function (geojson) {
+      /* Filtrage avant fitSize — projection calculée sur le bon périmètre */
+      geojson.features = geojson.features.filter(function (f) {
+        return codesIDF.includes(f.properties.code);
+      });
 
-/* Titre h3 du pilier — plus grand sur PC */
-.card-dark h3 {
-    font-size: 1rem; /* mobile */
-    font-weight: 700; color: #fff; margin-bottom: 0.6rem;
-    line-height: 1.3;
-}
-@media (min-width: 600px) {
-    .card-dark h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
-}
+      var svg        = d3.select('#idf-svg');
+      var projection = d3.geoMercator().fitSize([500, 500], geojson);
+      var pathGen    = d3.geoPath().projection(projection);
 
-/* Texte descriptif — plus lisible sur PC */
-.card-dark p {
-    color: #94a3b8; line-height: 1.65;
-    font-size: 0.95rem; /* mobile */
-}
-@media (min-width: 600px) {
-    .card-dark p { font-size: 1rem; }
-}
+      var depts = svg.selectAll('g')
+        .data(geojson.features)
+        .enter().append('g')
+        .attr('class', 'dept');
 
-/* ── PHOTOS ─────────────────────────────────────────────────── */
-#photos .container { padding: 2rem 1.5rem; }
-#photos h2 { text-align: center; margin-bottom: 1.25rem; }
-.photos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-@media (min-width: 600px) { .photos-grid { grid-template-columns: repeat(4, 1fr); } }
-.photo-card { position: relative; border-radius: 0.9rem; overflow: hidden; aspect-ratio: 1; }
-.photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo-label {
-    position: absolute; bottom: 0; width: 100%; padding: 0.65rem 0.75rem;
-    background: linear-gradient(transparent, rgba(0,0,0,0.82));
-    color: #fff; font-weight: 700; font-size: 0.72rem;
-}
-@media (min-width: 769px) { .photo-label { font-size: 0.82rem; } }
+      depts.append('path').attr('d', pathGen);
 
-/* ── CARTE ──────────────────────────────────────────────────── */
-#carte .container { padding: 2rem 1.5rem; }
+      depts.append('text')
+        .attr('x',     function (d) { return pathGen.centroid(d)[0]; })
+        .attr('y',     function (d) { return pathGen.centroid(d)[1]; })
+        .attr('class', 'dept-label')
+        .attr('dx',    function (d) { return d.properties.code === '92' ? -7  : 0; })
+        .attr('dy',    function (d) { return d.properties.code === '92' ? 12  : 0; })
+        .attr('aria-hidden', 'true')
+        .text(function (d) { return d.properties.code; });
 
-/*
-  MOBILE :
-  - Texte "Proximité Île-de-France" en haut
-  - Carte en-dessous, plus grande
-  DESKTOP : côte à côte
-*/
-.carte-layout { display: grid; gap: 1.5rem; align-items: center; }
+    }).catch(function (err) {
+      console.warn('Carte IDF non disponible :', err);
+    });
+  }
 
-@media (max-width: 768px) {
-    .carte-layout {
-        grid-template-rows: auto 1fr;
-        grid-template-columns: 1fr;
-    }
-    .carte-text {
-        text-align: center;
-        order: 0; /* texte en premier */
-    }
-    #idf-svg {
-        order: 1;
-        width: 100%;
-        /* Carte bien plus grande sur mobile */
-        max-height: 72vw;
-        min-height: 260px;
-    }
-}
-@media (min-width: 769px) {
-    .carte-layout { grid-template-columns: 1fr 1.2fr; gap: 3rem; }
-    #idf-svg { width: 100%; height: auto; }
-}
+  /* ──────────────────────────────────────────────────────────────
+   * ENVOI DU FORMULAIRE
+   *
+   * On envoie vers /.netlify/functions/submit (proxy).
+   * Ce proxy contacte GAS et nous retourne une vraie réponse JSON.
+   * On affiche "succès" seulement si le proxy confirme { ok: true }.
+   * Sinon on affiche un message d'erreur précis.
+   * ────────────────────────────────────────────────────────────── */
+  var form = document.getElementById('devisForm');
 
-.carte-text h2 { margin-bottom: 0.75rem; }
-.carte-text p {
-    color: var(--mid); font-style: italic;
-    border-left: 3px solid var(--orange);
-    padding-left: 1rem; font-size: 0.95rem;
-}
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      clearError('error-step2');
 
-#idf-svg { display: block; }
-.dept path { fill: rgba(0,51,160,0.82); stroke: #fff; stroke-width: 1.2; transition: fill 0.25s; }
-.dept:hover path, .dept:focus-within path { fill: var(--orange); }
-.dept-label { font-size: 11px; font-weight: 800; fill: #fff; text-anchor: middle; pointer-events: none; }
+      var submitBtn  = document.getElementById('submit-btn');
+      var successMsg = document.getElementById('successMsg');
 
-/* ── CONTACT ────────────────────────────────────────────────── */
-#contact { position: relative; }
-#contact .container { padding: 1.5rem 1.5rem 2rem; }
+      /* Honeypot */
+      var hp = form.querySelector('input[name="hp_url"]');
+      if (hp && hp.value.trim() !== '') {
+        /* Bot détecté : faux succès silencieux */
+        form.classList.add('hidden');
+        if (successMsg) successMsg.classList.remove('hidden');
+        return;
+      }
 
-.contact-layout { display: grid; gap: 2rem; align-items: start; }
-@media (min-width: 1024px) {
-    .contact-layout { grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem; }
-}
+      /* Validation email */
+      var emailEl = document.getElementById('email');
+      if (emailEl && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value.trim())) {
+        showError('error-step2', 'Adresse email invalide — ex : nom@entreprise.fr');
+        emailEl.focus();
+        return;
+      }
 
-/* Citation fondateur — police agrandie PC, interligne réduit entre les deux phrases */
-.contact-quote .kicker {
-    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 0.1em; color: var(--mid); margin-bottom: 1rem;
-}
-.contact-quote blockquote {
-    font-style: italic; color: var(--mid);
-    border-left: 4px solid var(--orange);
-    padding-left: 1.25rem; margin: 1rem 0;
-}
-/* Première phrase */
-.contact-quote blockquote p {
-    font-size: 1rem; line-height: 1.6;
-}
-/* Deuxième phrase — interligne réduit (margin-top petit) */
-.contact-quote blockquote p + p {
-    margin-top: 0.3rem;
-}
-/* PC : police agrandie */
-@media (min-width: 769px) {
-    .contact-quote blockquote p { font-size: 1.25rem; line-height: 1.7; }
-    .contact-quote blockquote p + p { margin-top: 0.4rem; }
-}
+      /* Consentement RGPD */
+      var rgpd = document.getElementById('rgpd');
+      if (rgpd && !rgpd.checked) {
+        showError('error-step2', 'Veuillez accepter la politique de confidentialité.');
+        rgpd.focus();
+        return;
+      }
 
-.contact-quote .founder {
-    font-weight: 800; color: var(--blue); font-size: 0.88rem;
-}
+      /* Envoi */
+      submitBtn.disabled    = true;
+      submitBtn.textContent = 'Transmission…';
+      submitBtn.setAttribute('aria-busy', 'true');
 
-/* Boîte formulaire */
-.form-box {
-    background: var(--blue); padding: 1.75rem 1.5rem;
-    border-radius: 1.5rem; color: #fff; width: 100%;
-    transition: border-radius 0.25s ease, padding 0.25s ease;
-}
-@media (min-width: 769px) {
-    .form-box { padding: 2.5rem; border-radius: 2rem; max-width: 520px; justify-self: end; }
-}
-@media (min-width: 1024px) { .form-box { max-width: 100%; } }
-.form-box > h2 { font-size: 1.15rem; color: #fff; margin-bottom: 1.25rem; font-weight: 700; }
+      var payload = Object.fromEntries(new FormData(form));
+      delete payload.hp_url;
 
-/* ── Plein écran formulaire (mobile) ────────────────────────── */
-@media (max-width: 768px) {
-    .form-box.form-fs {
-        position: fixed; inset: 0; z-index: 300;
-        border-radius: 0; overflow-y: auto;
-        padding-top:    max(1.25rem, env(safe-area-inset-top));
-        padding-left:   max(1.25rem, env(safe-area-inset-left));
-        padding-right:  max(1.25rem, env(safe-area-inset-right));
-        padding-bottom: max(2rem,    env(safe-area-inset-bottom));
-    }
-    .form-close-btn {
-        display: inline-flex; align-items: center; gap: 0.4rem;
-        background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-        color: #fff; font-size: 0.82rem; font-weight: 700;
-        padding: 0.5rem 1rem; border-radius: 50px;
-        cursor: pointer; font-family: inherit; margin-bottom: 1.25rem;
-    }
-    .form-close-btn:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
-    .form-box:not(.form-fs) .form-close-btn { display: none; }
-}
-@media (min-width: 769px) { .form-close-btn { display: none; } }
+      fetch(SUBMIT_URL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload)
+      })
+      .then(function (res) {
+        /* On lit la réponse JSON du proxy */
+        return res.json().then(function (data) {
+          return { ok: res.ok, data: data };
+        });
+      })
+      .then(function (result) {
+        if (result.ok && result.data.status === 'ok') {
+          /* Vrai succès confirmé par le serveur */
+          form.classList.add('hidden');
+          if (successMsg) {
+            successMsg.classList.remove('hidden');
+            successMsg.focus();
+          }
+          exitFullscreen();
+        } else {
+          /* GAS a répondu mais avec une erreur */
+          var msg = (result.data && result.data.error)
+            ? 'Erreur : ' + result.data.error + '. Appelez le 01 89 48 09 28.'
+            : 'Erreur inattendue. Appelez le 01 89 48 09 28.';
+          showError('error-step2', msg);
+          submitBtn.disabled    = false;
+          submitBtn.textContent = 'Envoyer';
+          submitBtn.removeAttribute('aria-busy');
+        }
+      })
+      .catch(function (err) {
+        /* Erreur réseau / proxy indisponible */
+        console.error('Erreur réseau :', err);
+        showError('error-step2', 'Problème de connexion. Appelez le 01 89 48 09 28.');
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Envoyer';
+        submitBtn.removeAttribute('aria-busy');
+      });
+    });
+  }
 
-/* ── Éléments formulaire ────────────────────────────────────── */
-.form-section { display: flex; flex-direction: column; gap: 0.9rem; }
+  /* ──────────────────────────────────────────────────────────────
+   * INIT
+   * ────────────────────────────────────────────────────────────── */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { initMap(); });
+  } else {
+    initMap();
+  }
 
-.field-label {
-    display: block; font-size: 0.68rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: rgba(255,255,255,0.6); margin-bottom: 0.35rem;
-}
-
-.text-input {
-    width: 100%; padding: 0.9rem 1rem;
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 0.75rem; color: #fff; font-family: inherit; outline: none;
-    font-size: max(1rem, 16px); transition: border-color 0.2s;
-}
-.text-input::placeholder { color: rgba(255,255,255,0.38); }
-.text-input:focus         { border-color: rgba(255,255,255,0.65); }
-.text-input:focus-visible { outline: 3px solid rgba(255,255,255,0.45); outline-offset: 2px; }
-
-.radio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
-.radio-input { position: absolute; opacity: 0; width: 0; height: 0; }
-.radio-input:focus-visible + .radio-label { outline: 3px solid #fff; outline-offset: 2px; }
-.radio-label {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    min-height: 52px; padding: 0.85rem 0.4rem;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 0.75rem; text-align: center; cursor: pointer;
-    font-size: 0.84rem; font-weight: 600; color: #fff;
-    transition: background 0.15s; user-select: none; line-height: 1.3;
-}
-.radio-label:active { background: rgba(255,255,255,0.18); }
-.radio-input:checked + .radio-label { background: var(--orange); border-color: rgba(255,255,255,0.35); }
-
-.btn-submit {
-    width: 100%; padding: 1rem; min-height: 52px; border-radius: 0.75rem;
-    background: var(--orange); color: #fff; font-weight: 700; font-size: 1rem;
-    text-transform: uppercase; letter-spacing: 0.04em;
-    border: none; cursor: pointer; font-family: inherit;
-    transition: background 0.2s, transform 0.1s; margin-top: 0.25rem;
-}
-.btn-submit:hover   { background: #cc5200; }
-.btn-submit:active  { transform: scale(0.99); }
-.btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
-.btn-submit:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-
-.btn-back {
-    flex: 0 0 auto; padding: 0.9rem 1.25rem; min-height: 52px;
-    border-radius: 0.75rem;
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22);
-    color: #fff; font-weight: 700; cursor: pointer; font-family: inherit;
-    font-size: 0.92rem; transition: background 0.15s;
-}
-.btn-back:hover { background: rgba(255,255,255,0.18); }
-.btn-back:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-
-.rgpd-row { display: flex; align-items: flex-start; gap: 0.75rem; }
-.rgpd-row input[type="checkbox"] {
-    width: 1.25rem; height: 1.25rem; flex-shrink: 0;
-    margin-top: 0.1rem; accent-color: var(--orange); cursor: pointer;
-}
-.rgpd-row input:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
-.rgpd-row label { font-size: 0.72rem; color: rgba(255,255,255,0.68); line-height: 1.6; cursor: pointer; }
-.rgpd-row label a { color: rgba(255,255,255,0.9); text-decoration: underline; }
-
-.form-error {
-    background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4);
-    border-radius: 0.5rem; padding: 0.7rem 0.9rem;
-    font-size: 0.84rem; color: #fca5a5; line-height: 1.5;
-}
-
-.success-msg {
-    padding: 1.5rem; text-align: center;
-    background: rgba(255,255,255,0.1); border-radius: 1rem;
-    border: 1px solid rgba(134,239,172,0.35);
-    color: #86efac; font-weight: 700; font-size: 0.95rem; line-height: 1.7;
-}
-
-/* ── Utilitaires formulaire ─────────────────────────────────── */
-.hp-wrap {
-    position: absolute; left: -9999px; top: -9999px;
-    overflow: hidden; width: 1px; height: 1px;
-}
-.fieldset-clean { border: none; padding: 0; }
-.step2-btns { display: flex; gap: 0.6rem; }
-.btn-submit-flex { flex: 1; }
-
-/* ── FOOTER ─────────────────────────────────────────────────── */
-footer {
-    scroll-snap-align: start; padding: 3rem 0 2.5rem;
-    background: var(--dark); color: #fff; text-align: center;
-}
-.footer-inner { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
-.footer-brand {
-    font-family: 'Outfit', sans-serif; font-weight: 600;
-    font-size: 1.4rem; letter-spacing: 0.02em; color: rgba(255,255,255,0.9);
-}
-.footer-email { color: var(--orange); font-size: 0.9rem; text-decoration: none; font-weight: 300; }
-.footer-email:hover { text-decoration: underline; }
-.footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.4rem; }
-.footer-links a { color: rgba(255,255,255,0.55); text-decoration: underline; font-size: 0.8rem; }
-.footer-links a:hover { color: #fff; }
-.footer-copy { color: rgba(255,255,255,0.2); font-size: 0.72rem; margin-top: 0.75rem; }
+})();
