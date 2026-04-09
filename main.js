@@ -20,7 +20,7 @@
    *  - L'URL GAS n'est plus visible dans le code client
    *  - On peut afficher un vrai message d'erreur si GAS plante
    */
-  var SUBMIT_URL = '/functions/submit';
+  var SUBMIT_URL = '/submit';
 
   /* ──────────────────────────────────────────────────────────────
    * ERREURS ACCESSIBLES
