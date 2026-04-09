@@ -194,7 +194,7 @@
 
       /* Validation email */
       var emailEl = document.getElementById('email');
-      if (emailEl && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value)) {
+      if (emailEl && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value.trim())) {
         showError('error-step2', 'Adresse email invalide — ex : nom@entreprise.fr');
         emailEl.focus();
         return;
