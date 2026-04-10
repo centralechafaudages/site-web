@@ -16,6 +16,7 @@
     --border: #e2e8f0;
     --w:      70rem;
     --hh:     64px;
+    --hh-mobile: 88px; /* header mobile empilé */
 }
 
 /* ── Scroll-snap ────────────────────────────────────────────── */
@@ -53,27 +54,47 @@ body {
 header {
     position: fixed; top: 0; width: 100%; z-index: 200;
     background: #fff; border-bottom: 1px solid var(--border);
-    height: var(--hh); display: flex; align-items: center;
-}
-.header-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; align-items: center;
 }
 
-/* Logo — line-height:0 supprime l'espace fantôme sous l'image */
+/* MOBILE : logo + téléphone empilés verticalement */
+@media (max-width: 768px) {
+    header { height: var(--hh-mobile); }
+    .header-inner {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        padding: 0.5rem 0;
+    }
+}
+/* DESKTOP : disposition côte à côte */
+@media (min-width: 769px) {
+    header { height: var(--hh); }
+    .header-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.header-inner { display: flex; width: 100%; }
+
+/* Logo */
 .logo-link { display: flex; align-items: center; line-height: 0; }
-.logo-img  { height: 2.2rem; width: auto; display: block; }
+.logo-img  { height: 2rem; width: auto; display: block; }
 @media (min-width: 769px) { .logo-img { height: 2.6rem; } }
 
 .btn-call-header {
     background: var(--orange); color: #fff;
-    padding: 0.6rem 1.3rem; border-radius: 50px;
-    font-weight: 700; text-decoration: none; font-size: 0.9rem;
-    line-height: 1; /* aligne la hauteur avec le logo */
-    transition: background 0.2s; white-space: nowrap;
+    padding: 0.5rem 1.2rem; border-radius: 50px;
+    font-weight: 700; text-decoration: none;
+    line-height: 1; white-space: nowrap;
     display: flex; align-items: center;
+    transition: background 0.2s;
 }
+@media (max-width: 768px) { .btn-call-header { font-size: 0.95rem; } }
+@media (min-width: 769px) { .btn-call-header { font-size: 0.9rem; } }
 .btn-call-header:hover { background: #cc5200; }
 .btn-call-header:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
 
@@ -85,8 +106,10 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: var(--hh);
 }
+/* Compense la hauteur du header selon le breakpoint */
+@media (max-width: 768px)  { section { padding-top: var(--hh-mobile); } }
+@media (min-width: 769px)  { section { padding-top: var(--hh); } }
 
 /* ── Typographie ────────────────────────────────────────────── */
 h1 {
@@ -155,11 +178,10 @@ h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; }
     .cards-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Carré sur desktop, hauteur libre sur mobile */
 .card-dark {
     background: var(--dark);
-    padding: 1.75rem 1.5rem;
-    border-radius: 1rem;        /* même rayon que les photos */
+    padding: 2rem 1.75rem;
+    border-radius: 1rem;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -170,13 +192,42 @@ h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; }
     .card-dark { aspect-ratio: 1; }
 }
 
-.card-num {
-    color: var(--orange); font-weight: 900; font-size: 0.78rem;
-    margin-bottom: 0.5rem; display: block;
-    text-transform: uppercase; letter-spacing: 0.08em;
+/*
+  NOUVEAU : chiffre isolé grand en titre
+  Remplace l'ancien .card-num
+  Mobile : 2.5rem / Desktop : 4rem
+*/
+.card-num-big {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: var(--orange);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.75rem;
+    font-size: 2.5rem;
 }
-.card-dark h3 { margin-bottom: 0.5rem; }
-.card-dark p  { color: #94a3b8; font-size: 0.88rem; line-height: 1.6; }
+@media (min-width: 600px) {
+    .card-num-big { font-size: 4rem; margin-bottom: 0.5rem; }
+}
+
+/* Titre h3 des piliers */
+.card-dark h3 {
+    font-size: 1rem;
+    font-weight: 700; color: #fff;
+    margin-bottom: 0.6rem; line-height: 1.3;
+}
+@media (min-width: 600px) {
+    .card-dark h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
+}
+
+/* Texte descriptif des piliers */
+.card-dark p {
+    color: #94a3b8; line-height: 1.65;
+    font-size: 0.95rem;
+}
+@media (min-width: 600px) {
+    .card-dark p { font-size: 1rem; }
+}
 
 /* ── PHOTOS ─────────────────────────────────────────────────── */
 #photos .container { padding: 2rem 1.5rem; }
@@ -204,17 +255,33 @@ h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; }
 
 /* ── CARTE ──────────────────────────────────────────────────── */
 #carte .container { padding: 2rem 1.5rem; }
-.carte-layout { display: grid; gap: 2rem; align-items: center; }
+
+/*
+  MOBILE : texte en haut, carte en dessous et plus grande
+  DESKTOP : côte à côte
+*/
+.carte-layout { display: grid; gap: 1.5rem; align-items: center; }
+
+@media (max-width: 768px) {
+    .carte-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+    .carte-text { order: 0; text-align: center; }
+    #idf-svg    { order: 1; max-height: 72vw; min-height: 260px; }
+}
 @media (min-width: 769px) {
     .carte-layout { grid-template-columns: 1fr 1.2fr; gap: 3rem; }
+    #idf-svg { width: 100%; height: auto; }
 }
+
+.carte-text h2 { margin-bottom: 0.75rem; }
 .carte-text p {
     margin-top: 0.75rem; color: var(--mid); font-style: italic;
     border-left: 3px solid var(--orange);
     padding-left: 1rem; font-size: 0.95rem;
 }
-#idf-svg { width: 100%; height: auto; display: block; }
-@media (max-width: 768px) { #idf-svg { max-height: 55vw; } }
+#idf-svg { width: 100%; display: block; }
 
 .dept path {
     fill: rgba(0,51,160,0.82); stroke: #fff; stroke-width: 1.2;
@@ -240,7 +307,7 @@ h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; }
     }
 }
 
-/* Citation */
+/* Citation fondateur */
 .contact-quote .kicker {
     font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
     letter-spacing: 0.1em; color: var(--mid); margin-bottom: 1rem;
@@ -248,12 +315,20 @@ h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; }
 .contact-quote blockquote {
     font-style: italic; color: var(--mid);
     border-left: 4px solid var(--orange);
-    padding-left: 1.25rem; margin: 1rem 0; line-height: 1.8;
+    padding-left: 1.25rem; margin: 1rem 0;
 }
-/* Deux phrases = deux paragraphes distincts */
-.contact-quote blockquote p { font-size: 1rem; }
-.contact-quote blockquote p + p { margin-top: 0.6rem; }
-@media (min-width: 769px) { .contact-quote blockquote p { font-size: 1.1rem; } }
+/* Chaque phrase */
+.contact-quote blockquote p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+/* Interligne réduit entre les deux phrases */
+.contact-quote blockquote p + p { margin-top: 0.3rem; }
+/* PC : police agrandie */
+@media (min-width: 769px) {
+    .contact-quote blockquote p { font-size: 1.25rem; line-height: 1.7; }
+    .contact-quote blockquote p + p { margin-top: 0.4rem; }
+}
 .contact-quote .founder {
     font-weight: 800; color: var(--blue); font-size: 0.88rem;
 }
@@ -319,7 +394,7 @@ h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; }
     border: 1px solid rgba(255,255,255,0.2);
     border-radius: 0.75rem; color: #fff;
     font-family: inherit; outline: none;
-    font-size: max(1rem, 16px); /* évite zoom automatique iOS */
+    font-size: max(1rem, 16px);
     transition: border-color 0.2s;
 }
 .text-input::placeholder { color: rgba(255,255,255,0.38); }
@@ -438,18 +513,15 @@ footer {
     font-size: 0.72rem; margin-top: 0.75rem;
 }
 
-/* ── Classes utilitaires inline supprimées du HTML ────────── */
+/* ── Classes utilitaires ────────────────────────────────────── */
 .txt-orange { color: #FF6600; }
 
-/* Honeypot — invisible pour les humains et les lecteurs d'écran */
 .hp-wrap {
     position: absolute; left: -9999px; top: -9999px;
     overflow: hidden; width: 1px; height: 1px;
 }
 
-/* Fieldset sans style natif */
 .fieldset-clean { border: none; padding: 0; }
 
-/* Boutons étape 2 côte à côte */
 .step2-btns { display: flex; gap: 0.6rem; }
 .btn-submit-flex { flex: 1; }
