@@ -6,16 +6,36 @@
     <title>Central Échafaudages | Expertise & Sécurité Île-de-France</title>
     <meta name="description" content="Location et montage d'échafaudages B2B en Île-de-France. Étude technique, voirie, conformité NF. Michel Kesraoui, 20 ans d'expertise terrain.">
 
-    <!--
-    ═══════════════════════════════════════════════════════════════
-     SÉCURITÉ : headers HTTP dans _headers (Cloudflare).
-     CSS externalisé dans style.css.
-    ═══════════════════════════════════════════════════════════════
-    -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Central Échafaudages",
+      "description": "Location et montage d'échafaudages B2B en Île-de-France. Étude technique, voirie, conformité NF.",
+      "url": "https://centralechafaudages.fr",
+      "telephone": "+33189480928",
+      "email": "etudes@centralechafaudages.fr",
+      "founder": { "@type": "Person", "name": "Michel Kesraoui" },
+      "areaServed": [
+        { "@type": "AdministrativeArea", "name": "Paris (75)" },
+        { "@type": "AdministrativeArea", "name": "Seine-et-Marne (77)" },
+        { "@type": "AdministrativeArea", "name": "Yvelines (78)" },
+        { "@type": "AdministrativeArea", "name": "Essonne (91)" },
+        { "@type": "AdministrativeArea", "name": "Hauts-de-Seine (92)" },
+        { "@type": "AdministrativeArea", "name": "Seine-Saint-Denis (93)" },
+        { "@type": "AdministrativeArea", "name": "Val-de-Marne (94)" },
+        { "@type": "AdministrativeArea", "name": "Val-d'Oise (95)" }
+      ],
+      "serviceType": ["Location d'échafaudages","Montage d'échafaudages","Travaux de toiture","Ravalement de façade","Isolation thermique extérieure ITE"],
+      "knowsAbout": "Échafaudages, conformité NF, voirie, sécurité chantier",
+      "foundingDate": "2006",
+      "slogan": "La sécurité de vos équipes, notre priorité absolue."
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,400&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,700;1,400&family=Outfit:ital,wght@0,700;0,800;1,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
     <script defer
@@ -27,31 +47,81 @@
 </head>
 <body>
 
-    <!--
-      HEADER MOBILE : logo + téléphone empilés verticalement
-      HEADER DESKTOP : logo à gauche, téléphone à droite
-    -->
-    <header>
+    <header id="site-header">
         <div class="container">
             <div class="header-inner">
                 <a href="#home" class="logo-link" aria-label="Central Échafaudages — accueil">
                     <img src="logo.png" alt="Central Échafaudages" class="logo-img"
                          width="160" height="40" loading="eager">
                 </a>
-                <a href="tel:0189480928" class="btn-call-header">01 89 48 09 28</a>
+                <a href="tel:0189480928" class="btn-call-header" id="btn-call-header">
+                    01 89 48 09 28
+                </a>
             </div>
         </div>
     </header>
 
     <!-- ── HOME ─────────────────────────────────────────────── -->
     <section id="home" aria-labelledby="home-h1">
-        <div class="container">
-            <div class="badge" aria-hidden="true">🛡️ 20 ans d'expertise terrain</div>
-            <h1 id="home-h1">
-                La sécurité de vos équipes,<br>
-                <span class="txt-orange">notre priorité absolue.</span>
-            </h1>
-            <p class="lead">Étude technique, voirie et coordination complète. Une solution clé en main pour vos chantiers en Île-de-France.</p>
+        <div class="container home-container">
+            <div class="home-top">
+
+                <div class="stamp-wrap">
+
+                    <!--
+                    ╔══════════════════════════════════════════╗
+                    ║  BADGE "20 ANS" — cercle double bordure  ║
+                    ║                                          ║
+                    ║  Pour modifier la taille :               ║
+                    ║    .stamp-svg { width / height }         ║
+                    ║    Mobile  → dans le bloc @media ≤768px  ║
+                    ║    Desktop → dans le bloc @media ≥769px  ║
+                    ║                                          ║
+                    ║  Pour modifier les couleurs :            ║
+                    ║    .stamp-bg       → fond du cercle      ║
+                    ║    .stamp-ring-out → anneau extérieur    ║
+                    ║    .stamp-ring-in  → anneau intérieur    ║
+                    ║    .stamp-number   → chiffre "20"        ║
+                    ║    .stamp-unit     → texte "ANS"         ║
+                    ║    .stamp-sub      → texte "expertise"   ║
+                    ║                                          ║
+                    ║  Pour modifier l'épaisseur des anneaux : ║
+                    ║    stroke-width="4"  → anneau extérieur  ║
+                    ║    stroke-width="1.5"→ anneau intérieur  ║
+                    ╚══════════════════════════════════════════╝
+                    -->
+                    <div class="stamp-medal" aria-label="20 ans d'expertise terrain">
+                        <svg class="stamp-svg" viewBox="0 0 100 100" aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <!-- Fond plein du cercle -->
+                            <circle class="stamp-bg" cx="50" cy="50" r="46"/>
+                            <!-- Anneau extérieur épais -->
+                            <circle class="stamp-ring-out" cx="50" cy="50" r="44"
+                                    fill="none" stroke-width="4"/>
+                            <!-- Anneau intérieur fin -->
+                            <circle class="stamp-ring-in"  cx="50" cy="50" r="37"
+                                    fill="none" stroke-width="1.5"/>
+                            <!-- Chiffre principal -->
+                            <text class="stamp-number" x="50" y="44"
+                                  text-anchor="middle" dominant-baseline="middle">20</text>
+                            <!-- Unité -->
+                            <text class="stamp-unit" x="50" y="62"
+                                  text-anchor="middle">ANS</text>
+                            <!-- Sous-texte optionnel -->
+                            <text class="stamp-sub" x="50" y="73"
+                                  text-anchor="middle">expertise</text>
+                        </svg>
+                    </div>
+
+                    <h1 id="home-h1">
+                        La sécurité de vos équipes,<br>
+                        <span class="txt-orange">notre priorité absolue.</span>
+                    </h1>
+                </div>
+
+                <p class="lead">Étude technique, voirie et coordination complète. Une solution clé en main pour vos chantiers en Île-de-France.</p>
+            </div>
+
             <nav class="home-btns" aria-label="Actions principales">
                 <a href="#contact" class="btn-main btn-orange">Devis express</a>
                 <a href="#expert"  class="btn-main btn-blue">Nos engagements</a>
@@ -64,26 +134,20 @@
         <div class="container">
             <h2 id="expert-h2">La maîtrise du terrain</h2>
             <div class="cards-grid">
-                <!--
-                  Structure des piliers :
-                  .card-num-big = chiffre isolé, grand, en titre
-                  h3            = titre du pilier
-                  p             = texte descriptif
-                -->
                 <div class="card-dark">
                     <span class="card-num-big" aria-hidden="true">01</span>
-                    <h3>Étude &amp; diagnostic</h3>
-                    <p>Analyse de votre projet pour anticiper les besoins techniques. Pas de surprise au montage.</p>
+                    <h3>Écouter</h3>
+                    <p>Analyse de vos besoins sur site et métré précis. Nous concevons la structure optimale adaptée aux contraintes de votre projet.</p>
                 </div>
                 <div class="card-dark">
                     <span class="card-num-big" aria-hidden="true">02</span>
-                    <h3>Logistique &amp; voirie</h3>
-                    <p>Gestion des autorisations de voirie et planification rigoureuse pour la fluidité de vos chantiers.</p>
+                    <h3>Planifier</h3>
+                    <p>Anticipation logistique et gestion complète des demandes de voirie. Nous planifions l'intervention pour respecter vos délais.</p>
                 </div>
                 <div class="card-dark">
                     <span class="card-num-big" aria-hidden="true">03</span>
-                    <h3>Sécurité &amp; conformité</h3>
-                    <p>Contrôles à l'implantation et édition du PV de réception. Normes NF garanties.</p>
+                    <h3>Livrer</h3>
+                    <p>Livraison et montage assurés par nos équipes. Échafaudage conforme, remise du PV de réception — vos travaux peuvent démarrer en sécurité.</p>
                 </div>
             </div>
         </div>
@@ -93,31 +157,37 @@
     <section id="photos" aria-labelledby="photos-h2">
         <div class="container">
             <h2 id="photos-h2">Domaines d'intervention</h2>
-            <div class="photos-grid">
-                <div class="photo-card">
+            <div class="photos-grid" id="photos-slider" role="list">
+                <div class="photo-card" role="listitem">
                     <img src="photo-couverture.webp"
                          alt="Échafaudage pour travaux de toiture et couverture"
                          loading="lazy" width="600" height="600">
                     <div class="photo-label" aria-hidden="true">Toiture &amp; couverture</div>
                 </div>
-                <div class="photo-card">
+                <div class="photo-card" role="listitem">
                     <img src="photo-ravalement.webp"
                          alt="Échafaudage pour ravalement de façade"
                          loading="lazy" width="600" height="600">
                     <div class="photo-label" aria-hidden="true">Ravalement</div>
                 </div>
-                <div class="photo-card">
+                <div class="photo-card" role="listitem">
                     <img src="photo-isolation.webp"
                          alt="Échafaudage pour isolation thermique extérieure ITE"
                          loading="lazy" width="600" height="600">
                     <div class="photo-label" aria-hidden="true">Isolation ITE</div>
                 </div>
-                <div class="photo-card">
+                <div class="photo-card" role="listitem">
                     <img src="photo-acces-complexe.webp"
                          alt="Échafaudage pour accès difficiles en milieu urbain dense"
                          loading="lazy" width="600" height="600">
                     <div class="photo-label" aria-hidden="true">Accès complexes</div>
                 </div>
+            </div>
+            <div class="slider-dots" id="slider-dots" aria-hidden="true">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
             </div>
         </div>
     </section>
@@ -127,12 +197,11 @@
         <div class="container">
             <div class="carte-layout">
                 <div class="carte-text">
-                    <h2 id="carte-h2">Proximité<br>Île-de-France</h2>
+                    <h2 id="carte-h2">Proximité<br><span class="idf-label">Île-de-France</span></h2>
                     <p>Intervention réactive sur les 8 départements franciliens.</p>
                 </div>
                 <svg id="idf-svg" viewBox="0 0 500 500"
-                     role="img"
-                     aria-labelledby="idf-title idf-desc">
+                     role="img" aria-labelledby="idf-title idf-desc">
                     <title id="idf-title">Carte Île-de-France</title>
                     <desc id="idf-desc">Carte des 8 départements couverts : Paris (75), Seine-et-Marne (77), Yvelines (78), Essonne (91), Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94), Val-d'Oise (95).</desc>
                 </svg>
@@ -152,6 +221,17 @@
                         <p>Ma mission : vous apporter la certitude technique, logistique et réglementaire pour travailler en toute sécurité."</p>
                     </blockquote>
                     <p class="founder">Michel Kesraoui — Fondateur</p>
+
+                    <div class="btn-open-form-wrap">
+                        <button class="btn-open-form" id="open-form-btn" type="button">
+                            <span class="btn-open-text">Votre projet</span>
+                            <svg class="btn-arrow-svg" viewBox="0 0 28 16" aria-hidden="true">
+                                <line x1="1" y1="8" x2="24" y2="8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <polyline points="16,1 24,8 16,15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <p class="btn-open-sub">on vous rappelle très vite</p>
+                    </div>
                 </div>
 
                 <div class="form-box" id="form-box">
@@ -165,7 +245,6 @@
 
                     <form id="devisForm" novalidate>
 
-                        <!-- Honeypot anti-bot -->
                         <div aria-hidden="true" class="hp-wrap">
                             <label for="hp_url">Ne pas remplir</label>
                             <input type="text" id="hp_url" name="hp_url"
@@ -174,7 +253,6 @@
 
                         <!-- ── Étape 1 ──────────────────────── -->
                         <div id="step-1" class="form-section">
-
                             <fieldset class="fieldset-clean">
                                 <legend class="field-label">Type de travaux *</legend>
                                 <div class="radio-grid">
@@ -204,24 +282,25 @@
                             <div>
                                 <label for="adresse" class="field-label">Localisation du chantier *</label>
                                 <input type="text" id="adresse" name="adresse"
-                                    placeholder="Ville ou code postal"
-                                    class="text-input"
+                                    placeholder="Ville ou code postal" class="text-input"
                                     required maxlength="100"
-                                    autocomplete="postal-code"
-                                    aria-required="true">
+                                    autocomplete="postal-code" aria-required="true">
                             </div>
 
                             <div id="error-step1" class="form-error hidden"
                                  role="alert" aria-live="assertive"></div>
 
                             <button type="button" id="next-btn" class="btn-submit">
-                                Continuer →
+                                <span class="btn-submit-text">Continuer</span>
+                                <svg class="btn-submit-arrow" viewBox="0 0 28 16" aria-hidden="true">
+                                    <line x1="1" y1="8" x2="24" y2="8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                    <polyline points="16,1 24,8 16,15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </button>
                         </div>
 
                         <!-- ── Étape 2 ──────────────────────── -->
                         <div id="step-2" class="form-section hidden">
-
                             <div>
                                 <label for="nom" class="field-label">Prénom &amp; nom *</label>
                                 <input type="text" id="nom" name="nom"
@@ -274,7 +353,11 @@
                                 </button>
                                 <button type="submit" id="submit-btn"
                                         class="btn-submit btn-submit-flex">
-                                    Envoyer
+                                    <span class="btn-submit-text">Envoyer</span>
+                                    <svg class="btn-submit-arrow" viewBox="0 0 28 16" aria-hidden="true">
+                                        <line x1="1" y1="8" x2="24" y2="8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                        <polyline points="16,1 24,8 16,15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
