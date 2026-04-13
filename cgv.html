@@ -4,60 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGV | Central Échafaudages</title>
+    <meta name="description" content="Conditions Générales de Vente et de Location - Central Échafaudages">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            line-height: 1.6;
-            color: #333;
+        html { scroll-snap-type: none !important; }
+        main {
+            padding-top: calc(var(--hh) + 40px);
+            padding-bottom: 80px;
+            background-color: #fff;
         }
-        h1 {
-            color: #0000FF;
-            border-bottom: 3px solid #FF6600;
-            padding-bottom: 10px;
+        .legal-content { max-width: 850px; margin: 0 auto; color: var(--dark); }
+        .legal-header { margin-bottom: 50px; text-align: center; }
+        .legal-header h1 { color: var(--blue); font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 10px; }
+        .legal-header p  { font-size: 0.9rem; color: var(--mid); font-weight: 700; }
+        .article { margin-bottom: 35px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        .article h2 {
+            color: var(--blue); font-size: 1.25rem; margin-bottom: 15px;
+            display: flex; align-items: center; gap: 10px;
         }
-        h2 {
-            color: #0000FF;
-            margin-top: 30px;
-            font-size: 20px;
+        .article h2::before {
+            content: ""; display: inline-block; width: 8px; height: 24px;
+            background-color: var(--orange); border-radius: 4px; flex-shrink: 0;
         }
-        .back {
-            display: inline-block;
-            margin-top: 40px;
-            color: #FF6600;
-            text-decoration: none;
-            font-weight: 600;
+        .article p, .article li { font-size: 1.05rem; line-height: 1.7; color: #334155; }
+        .article ul { margin-bottom: 15px; padding-left: 20px; }
+        .article li { margin-bottom: 8px; list-style-type: square; color: var(--orange); }
+        .article li span { color: #334155; }
+        .back-link {
+            display: inline-flex; align-items: center; margin-top: 40px;
+            color: var(--orange); text-decoration: none; font-weight: 700;
+            transition: transform 0.2s;
         }
+        .back-link:hover { transform: translateX(-5px); }
+        @media print { header, footer, .back-link { display: none !important; } main { padding-top: 0; } }
     </style>
 </head>
 <body>
-    <h1>Conditions Générales de Vente</h1>
-    
-    <h2>Article 1 - Champ d'application</h2>
-    <p>Les présentes Conditions Générales de Vente s'appliquent à toutes les locations d'échafaudages et matériels de travaux en hauteur effectuées par Central Échafaudages, auprès de professionnels du bâtiment (clients B2B).</p>
-    
-    <h2>Article 2 - Devis et commande</h2>
-    <p>Toute commande fait suite à l'acceptation d'un devis écrit. Le devis est établi sur la base des informations fournies par le client et reste valable 30 jours à compter de sa date d'émission.</p>
-    
-    <h2>Article 3 - Prix et paiement</h2>
-    <p>Les prix sont indiqués en euros HT. Le paiement s'effectue selon les modalités suivantes : 50% à la commande, solde à l'édition du PV de réception. Tout retard de paiement entraîne des pénalités de retard égales à 3 fois le taux d'intérêt légal.</p>
-    
-    <h2>Article 4 - Livraison et montage</h2>
-    <p>Les délais de livraison et de montage sont communiqués à titre indicatif. Central Échafaudages s'engage à informer le client de tout retard dès que possible. Le montage est réalisé par des équipes agréées conformément aux normes en vigueur.</p>
-    
-    <h2>Article 5 - Responsabilité et assurance</h2>
-    <p>Le client est responsable de l'utilisation conforme du matériel loué. Central Échafaudages souscrit une assurance responsabilité civile professionnelle. Le matériel reste la propriété de Central Échafaudages pendant toute la durée de la location.</p>
-    
-    <h2>Article 6 - Durée de location et restitution</h2>
-    <p>La durée de location est indiquée sur le devis. Toute prolongation doit faire l'objet d'un avenant écrit. La restitution du matériel s'effectue dans l'état initial, hors usure normale.</p>
-    
-    <h2>Article 7 - Résolution des litiges</h2>
-    <p>En cas de litige, les parties s'engagent à rechercher une solution amiable. À défaut, les tribunaux de Bogigny seront compétents.</p>
-    
-    <p style="margin-top: 40px; color: #666; font-size: 14px;">Dernière mise à jour : 02/01/2026</p>
 
-    <a href="index.html" class="back">← Retour à l'accueil</a>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html#home" class="logo-link" aria-label="Central Échafaudages — accueil">
+                    <img src="logo.png" alt="Central Échafaudages" class="logo-img" width="160" height="40">
+                </a>
+                <a href="tel:0189480928" class="btn-call-header">01 89 48 09 28</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="legal-content">
+
+                <div class="legal-header">
+                    <h1>Conditions Générales de Vente &amp; Location</h1>
+                    <p>Dernière mise à jour : 11 avril 2026</p>
+                </div>
+
+                <div class="article">
+                    <h2>Article 1 : Nature de l'activité et rôle</h2>
+                    <p>Central Échafaudages intervient en tant que concepteur de solutions et coordinateur technique. L'exécution des prestations (montage, démontage, transport) et la fourniture du matériel peuvent être confiées à des partenaires installateurs ou des sous-traitants sélectionnés pour leur certification.</p>
+                </div>
+
+                <div class="article">
+                    <h2>Article 2 : Accès et solidité des supports</h2>
+                    <p>Le Client garantit que le chantier est d'un abord facilement accessible et sans danger. Les supports (sols, toitures, terrasses) sont réputés solides. Central Échafaudages décline toute responsabilité pour les dégâts occasionnés par un affaissement dû à la nature du sol ou à une fragilité du support non signalée.</p>
+                </div>
+
+                <div class="article">
+                    <h2>Article 3 : Durée et indivisibilité</h2>
+                    <p>La location est conclue par mensualité indivisible (tout mois commencé est dû). Le Client renonce expressément (sauf accord préalable) à toute diminution de loyer en cas d'intempéries, grèves ou force majeure (renonciation aux Art. 1218 et 1195 du Code Civil). </p>
+                </div>
+
+                <div class="article">
+                    <h2>Article 4 : Garde juridique et sécurité</h2>
+                    <p>Dès la signature du Procès-Verbal (PV) de réception, le transfert de la garde juridique est opéré. Le Client est responsable des dommages causés par ou au matériel.</p>
+                    <ul>
+                        <li><span><strong>Interdiction :</strong> Il est interdit de modifier, déplacer ou démonter l'ouvrage sans accord écrit.</span></li>
+                        <li><span><strong>Vérification :</strong> La vérification trimestrielle est obligatoire (Art. R4323-69 du Code du travail).</span></li>
+                    </ul>
+                </div>
+
+                <div class="article">
+                    <h2>Article 5 : Voirie et autorisations</h2>
+                    <!--
+                      Note : Central Échafaudages gère les démarches de voirie pour ses clients
+                      (cf. description de service). L'article précise la répartition des
+                      responsabilités et des coûts entre les parties.
+                    -->
+                    <p>Central Échafaudages coordonne les démarches d'autorisation de voirie pour le compte du Client. Les taxes de voirie restent à la charge exclusive du Client. En cas d'impossibilité d'obtenir l'autorisation du fait du Client (informations manquantes, refus d'accès), les frais de déplacement et de manutention engagés seront facturés.</p>
+                </div>
+
+                <div class="article">
+                    <h2>Article 6 : État du matériel et restitution</h2>
+                    <p>Le matériel doit être rendu propre et balayé. Les salissures excessives (peinture, béton, déchets dangereux) entraîneront une facturation de nettoyage. Les dégradations seront facturées au prix du neuf.</p>
+                </div>
+
+                <div class="article">
+                    <h2>Article 7 : Annulation de commande</h2>
+                    <ul>
+                        <li><span><strong>Plus de 72h avant :</strong> 15 % du montant HT du devis.</span></li>
+                        <li><span><strong>Entre 72h et 24h avant :</strong> 50 % du forfait montage/transport HT.</span></li>
+                        <li><span><strong>Moins de 24h :</strong> 100 % du forfait montage/transport HT + 1re mensualité.</span></li>
+                    </ul>
+                </div>
+
+                <div class="article">
+                    <h2>Article 8 : Paiement et défaut de règlement</h2>
+                    <p>Le règlement est dû avant démontage. Tout retard entraîne des pénalités (taux BCE + 10 points) et une indemnité forfaitaire de 40 €.</p>
+                    <p><strong>Droit de rétention :</strong> En cas d'impayé, le Prestataire se réserve le droit de ne pas démonter l'ouvrage et de continuer la facturation de location.</p>
+                </div>
+
+                <div class="article">
+                    <h2>Article 9 : Juridiction</h2>
+                    <p>En cas de litige, compétence exclusive est attribuée au <strong>Tribunal de Commerce de Bobigny</strong>.</p>
+                </div>
+
+                <a href="index.html" class="back-link">← Retour au site</a>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <p class="footer-brand">Central échafaudages</p>
+                <a href="mailto:etudes@centralechafaudages.fr" class="footer-email">
+                    etudes@centralechafaudages.fr
+                </a>
+                <nav class="footer-links">
+                    <a href="cgv.html">CGV</a>
+                    <a href="mentions-legales.html">Mentions légales</a>
+                    <a href="politique-confidentialite.html">Confidentialité</a>
+                </nav>
+                <p class="footer-copy">&copy; 2026 Central échafaudages — Expert Île-de-France</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
