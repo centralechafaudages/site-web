@@ -2,6 +2,311 @@
  * Central Échafaudages — main.js
  *
  * Fonctionnalités :
+ *  1. Header mobile : classe home-active sur #home (logo centré, tél masqué)
+ *  2. Slider photos mobile : points de navigation
+ *  3. Bouton "Votre projet ?" → ouvre le plein écran formulaire
+ *  4. Navigation formulaire étape 1 → 2
+ *  5. Plein écran formulaire sur mobile
+ *  6. Carte interactive Île-de-France (D3.js)
+ *  7. Envoi via proxy Cloudflare Function → GAS → Sheets + Trello
+ */
+
+(function () {
+  'use strict';
+
+  var SUBMIT_URL = '/submit';
+
+  /* ──────────────────────────────────────────────────────────────
+   * ERREURS ACCESSIBLES
+   * ────────────────────────────────────────────────────────────── */
+  function showError(id, msg) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    el.focus();
+  }
+  function clearError(id) {
+    var el = document.getElementById(id);
+    if (el) { el.textContent = ''; el.classList.add('hidden'); }
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * 1. HEADER MOBILE — logo centré + tél masqué sur #home
+   *
+   *    On ajoute la classe "home-active" sur le <header> quand
+   *    #home est visible à ≥ 40% sur mobile.
+   *    Le CSS gère le reste (logo centré, bouton tél masqué).
+   * ────────────────────────────────────────────────────────────── */
+  var siteHeader  = document.getElementById('site-header');
+  var homeSection = document.getElementById('home');
+
+  if (siteHeader && homeSection && 'IntersectionObserver' in window) {
+    var headerObserver = new IntersectionObserver(function (entries) {
+      if (window.innerWidth > 768) return;
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          siteHeader.classList.add('home-active');
+        } else {
+          siteHeader.classList.remove('home-active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    headerObserver.observe(homeSection);
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * 2. SLIDER PHOTOS — points de navigation mobile
+   * ────────────────────────────────────────────────────────────── */
+  var slider = document.getElementById('photos-slider');
+  var dots   = document.querySelectorAll('#slider-dots .dot');
+
+  if (slider && dots.length) {
+    slider.addEventListener('scroll', function () {
+      var cards      = slider.querySelectorAll('.photo-card');
+      var sliderLeft = slider.scrollLeft;
+      var sliderW    = slider.offsetWidth;
+      var activeIdx  = 0;
+      var minDist    = Infinity;
+
+      cards.forEach(function (card, i) {
+        var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        var dist = Math.abs(cardCenter - sliderLeft - sliderW / 2);
+        if (dist < minDist) { minDist = dist; activeIdx = i; }
+      });
+
+      dots.forEach(function (dot, i) {
+        dot.classList.toggle('active', i === activeIdx);
+      });
+    }, { passive: true });
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * 3. PLEIN ÉCRAN FORMULAIRE
+   * ────────────────────────────────────────────────────────────── */
+  var formBox  = document.getElementById('form-box');
+  var closeBtn = document.getElementById('form-close-btn');
+  var openBtn  = document.getElementById('open-form-btn');
+  var isFullscreen = false;
+
+  function enterFullscreen() {
+    if (isFullscreen || window.innerWidth > 768) return;
+    isFullscreen = true;
+    formBox.classList.add('form-fs');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function exitFullscreen() {
+    if (!isFullscreen) return;
+    isFullscreen = false;
+    formBox.classList.remove('form-fs');
+    document.body.style.overflow = '';
+  }
+
+  /* Bouton "Votre projet ?" */
+  if (openBtn) {
+    openBtn.addEventListener('click', function () {
+      enterFullscreen();
+      var firstInput = formBox && formBox.querySelector('input:not([type="hidden"])');
+      if (firstInput) firstInput.focus();
+    });
+  }
+
+  /* Bouton "← Réduire" */
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
+      exitFullscreen();
+      var section = document.getElementById('contact');
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  /* Fallback : focus direct dans le formulaire sur mobile */
+  if (formBox) {
+    formBox.addEventListener('focusin', function (e) {
+      var tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') {
+        enterFullscreen();
+      }
+    });
+  }
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 768 && isFullscreen) exitFullscreen();
+  });
+
+  /* ──────────────────────────────────────────────────────────────
+   * 4. NAVIGATION FORMULAIRE étape 1 → 2
+   * ────────────────────────────────────────────────────────────── */
+  var step1   = document.getElementById('step-1');
+  var step2   = document.getElementById('step-2');
+  var nextBtn = document.getElementById('next-btn');
+  var prevBtn = document.getElementById('prev-btn');
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function () {
+      clearError('error-step1');
+      var adresseEl   = document.getElementById('adresse');
+      var typeTravaux = document.querySelector('input[name="type_travaux"]:checked');
+
+      if (!typeTravaux) {
+        showError('error-step1', 'Veuillez sélectionner un type de travaux.');
+        return;
+      }
+      if (!adresseEl || adresseEl.value.trim().length < 2) {
+        showError('error-step1', 'Veuillez indiquer la ville ou le code postal du chantier.');
+        if (adresseEl) adresseEl.focus();
+        return;
+      }
+
+      step1.classList.add('hidden');
+      step2.classList.remove('hidden');
+      var first = step2.querySelector('input:not([type="hidden"])');
+      if (first) first.focus();
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function () {
+      clearError('error-step2');
+      step2.classList.add('hidden');
+      step1.classList.remove('hidden');
+      if (nextBtn) nextBtn.focus();
+    });
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * 5. CARTE INTERACTIVE ÎLE-DE-FRANCE (D3.js)
+   * ────────────────────────────────────────────────────────────── */
+  function initMap() {
+    var svgEl = document.getElementById('idf-svg');
+    if (!svgEl || typeof d3 === 'undefined') return;
+
+    var codesIDF = ['75', '77', '78', '91', '92', '93', '94', '95'];
+
+    d3.json('./idf.geojson').then(function (geojson) {
+      geojson.features = geojson.features.filter(function (f) {
+        return codesIDF.includes(f.properties.code);
+      });
+
+      var svg        = d3.select('#idf-svg');
+      var projection = d3.geoMercator().fitSize([500, 500], geojson);
+      var pathGen    = d3.geoPath().projection(projection);
+
+      var depts = svg.selectAll('g')
+        .data(geojson.features)
+        .enter().append('g')
+        .attr('class', 'dept');
+
+      depts.append('path').attr('d', pathGen);
+
+      depts.append('text')
+        .attr('x',     function (d) { return pathGen.centroid(d)[0]; })
+        .attr('y',     function (d) { return pathGen.centroid(d)[1]; })
+        .attr('class', 'dept-label')
+        .attr('dx',    function (d) { return d.properties.code === '92' ? -7  : 0; })
+        .attr('dy',    function (d) { return d.properties.code === '92' ? 12  : 0; })
+        .attr('aria-hidden', 'true')
+        .text(function (d) { return d.properties.code; });
+
+    }).catch(function (err) {
+      console.warn('Carte IDF non disponible :', err);
+    });
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * 6. ENVOI DU FORMULAIRE
+   * ────────────────────────────────────────────────────────────── */
+  var form = document.getElementById('devisForm');
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      clearError('error-step2');
+
+      var submitBtn  = document.getElementById('submit-btn');
+      var successMsg = document.getElementById('successMsg');
+
+      var hp = form.querySelector('input[name="hp_url"]');
+      if (hp && hp.value.trim() !== '') {
+        form.classList.add('hidden');
+        if (successMsg) successMsg.classList.remove('hidden');
+        return;
+      }
+
+      var emailEl = document.getElementById('email');
+      if (emailEl && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value.trim())) {
+        showError('error-step2', 'Adresse email invalide — ex : nom@entreprise.fr');
+        emailEl.focus();
+        return;
+      }
+
+      var rgpd = document.getElementById('rgpd');
+      if (rgpd && !rgpd.checked) {
+        showError('error-step2', 'Veuillez accepter la politique de confidentialité.');
+        rgpd.focus();
+        return;
+      }
+
+      submitBtn.disabled    = true;
+      submitBtn.textContent = 'Transmission…';
+      submitBtn.setAttribute('aria-busy', 'true');
+
+      var payload = Object.fromEntries(new FormData(form));
+      delete payload.hp_url;
+
+      fetch(SUBMIT_URL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload)
+      })
+      .then(function (res) {
+        return res.json().then(function (data) {
+          return { ok: res.ok, data: data };
+        });
+      })
+      .then(function (result) {
+        if (result.ok && result.data.status === 'ok') {
+          form.classList.add('hidden');
+          if (successMsg) {
+            successMsg.classList.remove('hidden');
+            successMsg.focus();
+          }
+          exitFullscreen();
+        } else {
+          var msg = (result.data && result.data.error)
+            ? 'Erreur : ' + result.data.error + '. Appelez le 01 89 48 09 28.'
+            : 'Erreur inattendue. Appelez le 01 89 48 09 28.';
+          showError('error-step2', msg);
+          submitBtn.disabled    = false;
+          submitBtn.textContent = 'Envoyer';
+          submitBtn.removeAttribute('aria-busy');
+        }
+      })
+      .catch(function (err) {
+        console.error('Erreur réseau :', err);
+        showError('error-step2', 'Problème de connexion. Appelez le 01 89 48 09 28.');
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Envoyer';
+        submitBtn.removeAttribute('aria-busy');
+      });
+    });
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * INIT
+   * ────────────────────────────────────────────────────────────── */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { initMap(); });
+  } else {
+    initMap();
+  }
+
+})();/**
+ * Central Échafaudages — main.js
+ *
+ * Fonctionnalités :
  *  1. Navigation formulaire étape 1 → 2
  *  2. Plein écran formulaire sur mobile
  *  3. Carte interactive Île-de-France (D3.js)
