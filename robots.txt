@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Pages légales accessibles aux robots
+Allow: /mentions-legales.html
+Allow: /cgv.html
+Allow: /politique-confidentialite.html
+
+# Sitemap
+Sitemap: https://centralechafaudages.fr/sitemap.xml
