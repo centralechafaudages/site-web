@@ -4,73 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mentions Légales | Central Échafaudages</title>
+    <meta name="description" content="Mentions légales de la société Central Échafaudages - Expert en Île-de-France.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            line-height: 1.6;
-            color: #333;
+        html { scroll-snap-type: none !important; }
+        main {
+            /* --hh est défini dans style.css et vaut 64px sur tous les écrans */
+            padding-top: calc(var(--hh) + 40px);
+            padding-bottom: 80px;
+            background-color: #fff;
         }
-        h1 {
-            color: #0000FF;
-            border-bottom: 3px solid #FF6600;
-            padding-bottom: 10px;
+        .legal-content { max-width: 850px; margin: 0 auto; color: var(--dark); }
+        .legal-header { margin-bottom: 50px; text-align: center; }
+        .legal-header h1 { color: var(--blue); font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 10px; }
+        .article { margin-bottom: 35px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        .article h2 {
+            color: var(--blue); font-size: 1.25rem; margin-bottom: 15px;
+            display: flex; align-items: center; gap: 10px;
         }
-        h2 {
-            color: #0000FF;
-            margin-top: 30px;
+        .article h2::before {
+            content: ""; display: inline-block; width: 8px; height: 24px;
+            background-color: var(--orange); border-radius: 4px; flex-shrink: 0;
         }
-        a {
-            color: #0000FF;
+        .article p { margin-bottom: 12px; font-size: 1.05rem; line-height: 1.7; color: #334155; }
+        .article a { color: var(--orange); }
+        .back-link {
+            display: inline-flex; align-items: center; margin-top: 40px;
+            color: var(--orange); text-decoration: none; font-weight: 700;
+            transition: transform 0.2s;
         }
-        .back {
-            display: inline-block;
-            margin-top: 40px;
-            color: #FF6600;
-            text-decoration: none;
-            font-weight: 600;
-        }
+        .back-link:hover { transform: translateX(-5px); }
+        @media print { header, footer, .back-link { display: none !important; } main { padding-top: 0; } }
     </style>
 </head>
 <body>
-    <h1>Mentions Légales</h1>
-    
-    <h2>Éditeur du site</h2>
-    <p>
-        <strong>Central Échafaudages</strong><br>
-        SAS au capital de 1 000,00 €<br>
-        SIRET : 94534016400017<br>
-        RCS : Bobigny<br>
-        Siège social : 14, allée de Bragance - 93320 Les Pavillons-sous-Bois<br>
-        Téléphone : 01 89 48 09 28<br>
-        Email : contact@centralechafaudages.fr
-    </p>
-    
-    <h2>Directeur de la publication</h2>
-    <p>Michel Kesraoui, Président</p>
-    
-    <h2>Hébergement</h2>
-    <p>
-        <strong>GitHub Pages</strong><br>
-        88 Colin P Kelly Jr St<br>
-        San Francisco, CA 94107<br>
-        United States
-    </p>
-    
-    <h2>Activité</h2>
-    <p>Location d'échafaudages et matériels de travaux en hauteur pour professionnels du bâtiment (B2B). Activité exercée en Île-de-France.</p>
-    
-    <h2>Propriété intellectuelle</h2>
-    <p>L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés.</p>
-    
-    <h2>Données personnelles</h2>
-    <p>Les informations collectées via le formulaire de contact sont destinées à Central Échafaudages pour le traitement de vos demandes de devis. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer ces droits : contact@centralechafaudages.fr.</p>
-    
-    <h2>Cookies</h2>
-    <p>Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement. Aucun cookie de traçage ou publicitaire n'est déposé.</p>
 
-    <a href="index.html" class="back">← Retour à l'accueil</a>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html#home" class="logo-link" aria-label="Central Échafaudages — accueil">
+                    <img src="logo.png" alt="Central Échafaudages" class="logo-img" width="160" height="40">
+                </a>
+                <a href="tel:0189480928" class="btn-call-header">01 89 48 09 28</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="legal-content">
+
+                <div class="legal-header">
+                    <h1>Mentions Légales</h1>
+                </div>
+
+                <div class="article">
+                    <h2>Éditeur du site</h2>
+                    <p>
+                        <strong>Central Échafaudages</strong><br>
+                        SAS au capital de 1 000,00 €<br>
+                        SIRET : 94534016400017<br>
+                        RCS : Bobigny<br>
+                        Siège social : 14, allée de Bragance — 93320 Les Pavillons-sous-Bois<br>
+                        Email : <a href="mailto:etudes@centralechafaudages.fr">etudes@centralechafaudages.fr</a>
+                    </p>
+                </div>
+
+                <div class="article">
+                    <h2>Directeur de la publication</h2>
+                    <p>Michel Kesraoui, en sa qualité de Président.</p>
+                </div>
+
+                <div class="article">
+                    <h2>Hébergement et diffusion</h2>
+                    <p>
+                        <strong>Stockage du code source :</strong><br>
+                        GitHub, Inc. — 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA.
+                    </p>
+                    <p>
+                        <strong>Hébergement technique et CDN :</strong><br>
+                        Cloudflare, Inc. — 101 Townsend St, San Francisco, CA 94107, USA.<br>
+                        <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer">www.cloudflare.com</a>
+                    </p>
+                </div>
+
+                <div class="article">
+                    <h2>Activité</h2>
+                    <p>Conception de solutions et coordination technique en location d'échafaudages pour professionnels du bâtiment (B2B). Expertise et gestion de projets sur les 8 départements de l'Île-de-France.</p>
+                </div>
+
+                <div class="article">
+                    <h2>Propriété intellectuelle</h2>
+                    <p>L'ensemble des éléments (textes, logos, images, structure technique) présents sur ce site relève de la législation française et internationale sur le droit d'auteur. Toute reproduction est interdite sans autorisation préalable écrite de Central Échafaudages.</p>
+                </div>
+
+                <a href="index.html" class="back-link">← Retour au site</a>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <p class="footer-brand">Central échafaudages</p>
+                <a href="mailto:etudes@centralechafaudages.fr" class="footer-email">
+                    etudes@centralechafaudages.fr
+                </a>
+                <nav class="footer-links">
+                    <a href="cgv.html">CGV</a>
+                    <a href="mentions-legales.html">Mentions légales</a>
+                    <a href="politique-confidentialite.html">Confidentialité</a>
+                </nav>
+                <p class="footer-copy">&copy; 2026 Central échafaudages — Expert Île-de-France</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
