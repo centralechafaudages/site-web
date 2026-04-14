@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ — Questions fréquentes | Central Échafaudages</title>
+    <meta name="description" content="Délais d'intervention, conformité NF, voirie, zone géographique : toutes les réponses aux questions fréquentes sur les services de Central Échafaudages en Île-de-France.">
+
+    <link rel="canonical" href="https://centralechafaudages.fr/faq.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        html { scroll-snap-type: none !important; }
+        main {
+            padding-top: calc(var(--hh) + 40px);
+            padding-bottom: 80px;
+            background-color: #fff;
+        }
+        .legal-content { max-width: 850px; margin: 0 auto; color: var(--dark); }
+        .legal-header  { margin-bottom: 50px; text-align: center; }
+        .legal-header h1 { color: var(--blue); font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 10px; }
+        .legal-header .subtitle {
+            font-size: 1.05rem; color: var(--mid); max-width: 520px;
+            margin: 0 auto; line-height: 1.6;
+        }
+
+        /* ── Bloc FAQ ── */
+        .faq-block { margin-bottom: 48px; }
+        .faq-block-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--orange); margin-bottom: 16px;
+        }
+
+        /* ── Items accordéon ── */
+        .article { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+        details.faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+        details.faq-item:first-of-type { border-top: 1px solid var(--border); }
+
+        summary.faq-question {
+            list-style: none;
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 1rem;
+            padding: 1.1rem 0;
+            font-size: 1.05rem; font-weight: 700; color: var(--dark);
+            cursor: pointer; user-select: none;
+            transition: color 0.2s;
+        }
+        summary.faq-question::-webkit-details-marker { display: none; }
+        summary.faq-question:hover { color: var(--blue); }
+        details[open] summary.faq-question { color: var(--blue); }
+
+        /* Icône +/× composée avec transform */
+        summary.faq-question::after {
+            content: '';
+            flex-shrink: 0;
+            width: 22px; height: 22px;
+            background-color: var(--orange);
+            border-radius: 50%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cline x1='10' y1='4' x2='10' y2='16' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='4' y1='10' x2='16' y2='10' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-size: contain;
+            will-change: transform;
+            transition: transform 0.25s ease;
+        }
+        details[open] summary.faq-question::after { transform: rotate(45deg); }
+
+        .faq-answer {
+            padding: 0 0 1.25rem;
+        }
+        .faq-answer p {
+            font-size: 1.05rem; line-height: 1.7; color: #334155;
+            margin-bottom: 10px;
+        }
+        .faq-answer p:last-child { margin-bottom: 0; }
+        .faq-answer a { color: var(--orange); }
+        .faq-answer ul {
+            margin: 8px 0 10px 1.2rem;
+            font-size: 1.05rem; line-height: 1.7; color: #334155;
+        }
+        .faq-answer ul li { margin-bottom: 4px; }
+
+        /* ── CTA bas de page ── */
+        .faq-cta {
+            margin-top: 48px; padding: 2rem 1.5rem;
+            background: var(--light); border-radius: 1rem;
+            border-left: 4px solid var(--orange);
+            text-align: center;
+        }
+        .faq-cta p { font-size: 1.05rem; color: var(--dark); margin-bottom: 1.25rem; }
+        .faq-cta strong { color: var(--blue); }
+        .faq-cta a.btn-orange {
+            display: inline-block;
+            background: var(--orange); color: #fff;
+            padding: 0.85rem 2rem; border-radius: 0.75rem;
+            font-weight: 700; text-decoration: none;
+            font-size: 0.95rem; text-transform: uppercase;
+            letter-spacing: 0.05em; transition: background 0.2s;
+        }
+        .faq-cta a.btn-orange:hover { background: #cc5200; }
+
+        .back-link {
+            display: inline-flex; align-items: center; margin-top: 40px;
+            color: var(--orange); text-decoration: none; font-weight: 700;
+            transition: transform 0.2s;
+        }
+        .back-link:hover { transform: translateX(-5px); }
+
+        @media print {
+            header, footer, .back-link, .faq-cta { display: none !important; }
+            main { padding-top: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html#home" class="logo-link" aria-label="Central Échafaudages — accueil">
+                    <img src="logo.png" alt="Central Échafaudages" class="logo-img" width="160" height="40">
+                </a>
+                <a href="tel:0189480928" class="btn-call-header">01 89 48 09 28</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="legal-content">
+
+                <div class="legal-header">
+                    <h1>Questions fréquentes</h1>
+                    <p class="subtitle">Tout ce que vous devez savoir avant de faire appel à Central Échafaudages.</p>
+                </div>
+
+                <!-- ── Intervention & délais ── -->
+                <div class="faq-block">
+                    <p class="faq-block-title">Intervention &amp; délais</p>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">Dans quels délais intervenez-vous ?</summary>
+                        <div class="faq-answer">
+                            <p>Nous intervenons généralement sous 48 à 72h après validation du devis, selon la disponibilité des équipes et les contraintes de voirie.</p>
+                            <p>Pour les chantiers nécessitant une autorisation de voirie, le délai peut s'étendre selon les délais de traitement en mairie — nous anticipons ces démarches dès la validation de votre commande.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">Quelle est votre zone d'intervention ?</summary>
+                        <div class="faq-answer">
+                            <p>Nous couvrons l'ensemble des 8 départements d'Île-de-France :</p>
+                            <ul>
+                                <li>Paris (75)</li>
+                                <li>Seine-et-Marne (77)</li>
+                                <li>Yvelines (78)</li>
+                                <li>Essonne (91)</li>
+                                <li>Hauts-de-Seine (92)</li>
+                                <li>Seine-Saint-Denis (93)</li>
+                                <li>Val-de-Marne (94)</li>
+                                <li>Val-d'Oise (95)</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">Intervenez-vous en urgence ?</summary>
+                        <div class="faq-answer">
+                            <p>Oui, selon les disponibilités de nos équipes. Appelez-nous directement au <a href="tel:0189480928">01 89 48 09 28</a> pour évaluer la faisabilité d'une intervention urgente.</p>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- ── Conformité & sécurité ── -->
+                <div class="faq-block">
+                    <p class="faq-block-title">Conformité &amp; sécurité</p>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">Vos échafaudages sont-ils conformes aux normes NF ?</summary>
+                        <div class="faq-answer">
+                            <p>Tous nos échafaudages respectent la norme NF EN 12811. Un <strong>procès-verbal de réception</strong> est remis systématiquement à chaque livraison, garantissant la conformité réglementaire de votre chantier.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">Gérez-vous les demandes d'occupation de voirie ?</summary>
+                        <div class="faq-answer">
+                            <p>Oui, Central Échafaudages prend en charge l'ensemble des démarches administratives : demande d'arrêté de voirie, DICT, et coordination avec les mairies d'Île-de-France.</p>
+                            <p>Cette gestion complète vous évite toute démarche administrative et garantit la légalité de l'installation sur l'espace public.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">Qui est responsable de la sécurité de l'échafaudage ?</summary>
+                        <div class="faq-answer">
+                            <p>Central Échafaudages est responsable du montage, de la conformité et de la remise du PV de réception. Une fois l'échafaudage réceptionné par votre équipe, la responsabilité d'utilisation vous incombe.</p>
+                            <p>Nous assurons également le démontage en fin de chantier dans les règles de l'art.</p>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- ── Prestations ── -->
+                <div class="faq-block">
+                    <p class="faq-block-title">Prestations</p>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">Travaillez-vous uniquement avec des professionnels ?</summary>
+                        <div class="faq-answer">
+                            <p>Oui, nous intervenons exclusivement en <strong>B2B</strong> : entreprises de couverture, de ravalement, d'isolation thermique extérieure (ITE), et maîtres d'œuvre en Île-de-France.Il peut nous arriver cependant de travailler pour  des particuliers</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">Proposez-vous uniquement la location, ou aussi le montage ?</summary>
+                        <div class="faq-answer">
+                            <p>Les deux. Notre offre est clé en main : étude technique sur site, livraison, montage par nos équipes, remise du PV de réception, et démontage en fin de chantier.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">Comment obtenir un devis ?</summary>
+                        <div class="faq-answer">
+                            <p>Le plus simple est d'utiliser notre <a href="index.html#contact">formulaire de devis express</a> sur la page d'accueil. Vous pouvez aussi nous appeler directement au <a href="tel:0189480928">01 89 48 09 28</a>.</p>
+                            <p>Nous vous répondons très rapidement après réception de votre demande.</p>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- ── CTA ── -->
+                <div class="faq-cta">
+                    <p>Vous avez un projet en Île-de-France ?<br>
+                    <strong>Obtenez votre devis en moins de 2 minutes.</strong></p>
+                    <a href="index.html#contact" class="btn-orange">Demander un devis express</a>
+                </div>
+
+                <a href="index.html" class="back-link">← Retour au site</a>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <p class="footer-brand">Central échafaudages</p>
+                <a href="mailto:etudes@centralechafaudages.fr" class="footer-email">
+                    etudes@centralechafaudages.fr
+                </a>
+                <nav class="footer-links">
+                    <a href="faq.html">FAQ</a>
+                    <a href="cgv.html">CGV</a>
+                    <a href="mentions-legales.html">Mentions légales</a>
+                    <a href="politique-confidentialite.html">Confidentialité</a>
+                </nav>
+                <p class="footer-copy">&copy; 2026 Central échafaudages — Expert Île-de-France</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
