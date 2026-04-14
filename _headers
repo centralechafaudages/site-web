@@ -1,6 +1,6 @@
 ##############################################################
 #  Central Échafaudages — Headers de sécurité HTTP
-#  Format Netlify (_headers à la racine du dossier publié)
+#  Format Cloudflare Pages (_headers à la racine du dossier publié)
 ##############################################################
 
 /*
@@ -11,13 +11,16 @@
   #
   # ✅ unsafe-inline absent de script-src (JS dans main.js)
   #
-  # ✅ d3js.org absent de script-src (D3 chargé depuis cdnjs)
+  # ✅ cdnjs.cloudflare.com dans script-src (D3.js)
   #
-  # ✅ /.netlify/functions/ ajouté à connect-src
-  #    Le formulaire appelle notre proxy, pas GAS directement.
-  #    L'URL GAS n'est plus exposée dans le code client.
+  # ✅ connect-src : 'self' + domaine explicite pour idf.geojson
+  #    D3.js fait un fetch() vers ./idf.geojson — Cloudflare Pages
+  #    peut servir les assets depuis un sous-domaine CDN ce qui
+  #    fait échouer 'self' seul. Le domaine explicite corrige ça.
   #
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; img-src * data: blob:; font-src https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';
+  # ✅ /submit ajouté à connect-src (proxy Cloudflare Function)
+  #
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; img-src * data: blob:; font-src https://fonts.gstatic.com; connect-src 'self' https://centralechafaudages.fr https://fonts.googleapis.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';
 
   # ── Anti-clickjacking ──────────────────────────────────────
   X-Frame-Options: DENY
@@ -40,8 +43,8 @@
 ##############################################################
 #  AUDIT SÉCURITÉ — état final
 #
-#  ✅ CSP stricte à 100 % : plus d'unsafe-inline nulle part
-#  ✅ URL GAS masquée côté client (variable d'env Netlify)
+#  ✅ CSP stricte : plus d'unsafe-inline nulle part
+#  ✅ URL GAS masquée côté client (variable d'env Cloudflare)
 #  ✅ Vraie réponse HTTP — plus de faux positif no-cors
 #  ✅ Validation double : client (main.js) + serveur (submit.js)
 #  ✅ Token secret dans le payload (FORM_TOKEN)
@@ -53,6 +56,7 @@
 #  ✅ Pas de console.log en production
 #  ✅ Pas d'alert() — erreurs inline accessibles (role=alert)
 #  ✅ Headers serveur corrects (pas de meta X-Frame-Options)
+#  ✅ idf.geojson accessible (connect-src domaine explicite)
 #
 #  ⚠️  RESTE À FAIRE (côté Google Apps Script)
 #     Vérifier le token FORM_TOKEN dans doPost(e) :
@@ -74,7 +78,7 @@
 #
 ##############################################################
 #  DÉPLOIEMENT — variables d'environnement à configurer
-#  dans Netlify > Site settings > Environment variables :
+#  dans Cloudflare Pages > Settings > Environment variables :
 #
 #  GAS_URL    = https://script.google.com/macros/s/VOTRE_ID/exec
 #  FORM_TOKEN = votre_chaine_secrete_longue
