@@ -69,6 +69,20 @@ header {
 .btn-call-header:hover { background: #cc5200; }
 .btn-call-header:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
 
+
+/* ── Header pages légales — aligné sur les marges du contenu ── */
+header.header-legal .header-inner {
+    max-width: var(--w);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+    justify-content: space-between;
+}
+/* Sur les pages légales, on n'applique pas le logo centré mobile */
+header.header-legal.home-active .header-inner { justify-content: space-between; }
+header.header-legal.home-active .btn-call-header { display: flex; }
+header.header-legal.home-active .logo-img { height: 2rem; }
+
 /* ── Sections ───────────────────────────────────────────────── */
 section {
     scroll-snap-align: start; scroll-snap-stop: always;
@@ -536,9 +550,28 @@ footer {
 }
 .footer-email { color: var(--orange); font-size: 0.9rem; text-decoration: none; font-weight: 300; }
 .footer-email:hover { text-decoration: underline; }
-.footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.4rem; }
-.footer-links a { color: rgba(255,255,255,0.55); text-decoration: underline; font-size: 0.8rem; }
-.footer-links a:hover { color: #fff; }
+.footer-links {
+    display: flex; justify-content: center;
+    align-items: center; gap: 0; flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+/* Deux groupes : utiles | légaux — séparateur visuel */
+.footer-links .sep {
+    color: rgba(255,255,255,0.2);
+    margin: 0 0.75rem; font-size: 0.75rem;
+    user-select: none;
+}
+.footer-links a {
+    color: rgba(255,255,255,0.55); text-decoration: none;
+    font-size: 0.8rem; padding: 0.15rem 0.6rem;
+    border-radius: 3px; transition: color 0.2s;
+}
+.footer-links a:hover { color: #fff; text-decoration: underline; }
+/* Liens "utiles" légèrement mis en valeur */
+.footer-links a.footer-link-util {
+    color: rgba(255,255,255,0.75); font-weight: 600;
+}
+.footer-links a.footer-link-util:hover { color: #fff; }
 .footer-copy { color: rgba(255,255,255,0.2); font-size: 0.72rem; margin-top: 0.75rem; }
 
 /* ── Corrections contrastes (SEO UX) ───────────────────────── */
