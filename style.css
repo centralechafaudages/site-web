@@ -641,3 +641,61 @@ footer {
 #cookie-accept:focus-visible, #cookie-refuse:focus-visible {
     outline: 3px solid var(--orange); outline-offset: 2px;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   STYLES SPÉCIFIQUES : GUIDE & PAGES LÉGALES
+   (centralisé depuis les <style> inline des pages annexes)
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Reset scroll-snap pour les pages sans sections ── */
+.no-snap { scroll-snap-type: none !important; }
+
+/* ── Contenu pages légales (CGV, Mentions, Confidentialité) ── */
+.legal-content { max-width: 850px; margin: 0 auto; color: var(--dark); padding: 2rem 1.5rem; }
+.legal-header { margin-bottom: 50px; text-align: center; }
+.legal-header h1 { color: var(--blue); font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 10px; }
+.article { margin-bottom: 35px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.article h2 { color: var(--blue); font-size: 1.25rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+.article h2::before { content: ""; display: inline-block; width: 8px; height: 24px; background-color: var(--orange); border-radius: 4px; flex-shrink: 0; }
+.article p, .article li { font-size: 1.05rem; line-height: 1.7; color: #334155; }
+.article ul { margin-bottom: 15px; padding-left: 20px; }
+.article li { margin-bottom: 8px; list-style-type: square; color: var(--orange); }
+.article li span { color: #334155; }
+
+/* ── Guide sécurité ── */
+.guide-wrap { max-width: 750px; margin: 0 auto; padding: 0 1.5rem; color: var(--dark); }
+.guide-header { text-align: center; margin-bottom: 1.5rem; }
+.checklist { display: flex; flex-direction: column; margin-bottom: 2rem; }
+.check-item { display: grid; grid-template-columns: 40px 1fr; align-items: start; padding: 0.7rem 0; border-bottom: 1px solid var(--border); }
+.check-box { font-size: 1.4rem; font-weight: 800; line-height: 1; }
+.check-body { padding-left: 5px; }
+.check-title { display: block; font-size: 1.1rem; font-weight: 800; color: var(--dark); margin-bottom: 2px; }
+.check-desc { font-size: 0.95rem; color: #334155; line-height: 1.4; margin: 0; }
+.warning-zone { margin-bottom: 2.5rem; text-align: center; }
+.warning-kicker { color: #b91c1c; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; text-transform: uppercase; margin-bottom: 0.8rem; display: block; }
+.warning-text { font-size: 1rem; line-height: 1.5; text-align: justify; margin-bottom: 1.2rem; color: #334155; }
+.authority-box { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.authority-label { font-size: 0.8rem; font-weight: 700; color: var(--mid); text-transform: uppercase; }
+.org-name { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--blue); border-bottom: 2px solid var(--orange); line-height: 1.2; }
+
+/* ── FAQ ── */
+details.faq-item { border-bottom: 1px solid var(--border); }
+details.faq-item:first-of-type { border-top: 1px solid var(--border); }
+summary.faq-question { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; font-size: 1.05rem; font-weight: 700; color: var(--dark); cursor: pointer; }
+.faq-answer { padding: 0 0 1.25rem; }
+.faq-cta { margin-top: 48px; padding: 2rem 1.5rem; background: var(--light); border-radius: 1rem; border-left: 4px solid var(--orange); text-align: center; }
+
+/* ── Éléments communs aux pages annexes ── */
+.back-link { display: inline-flex; align-items: center; margin-top: 40px; color: var(--orange); text-decoration: none; font-weight: 700; transition: transform 0.2s; }
+.back-link:hover { transform: translateX(-5px); }
+
+/* ── Impression ── */
+@media print {
+    @page { size: A4; margin: 15mm 10mm; }
+    header, footer, .cta-container, .secondary-actions, .back-link, .faq-cta { display: none !important; }
+    main { padding: 0 !important; margin: 0 !important; }
+    .print-only { display: block !important; }
+    .print-footer-info { display: flex !important; justify-content: space-between; align-items: flex-start; border-top: 1.5px solid var(--blue); padding-top: 15px; margin-top: 40px; width: 100%; page-break-inside: avoid; }
+    .print-info-left strong { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--blue); text-transform: uppercase; display: block; }
+    .print-info-right { text-align: right; font-size: 0.8rem; color: #334155; line-height: 1.4; font-weight: 600; }
+}
