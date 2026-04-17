@@ -694,3 +694,60 @@ summary.faq-question { list-style: none; display: flex; justify-content: space-b
     .print-info-left strong { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--blue); text-transform: uppercase; display: block; }
     .print-info-right { text-align: right; font-size: 0.8rem; color: #334155; line-height: 1.4; font-weight: 600; }
 }
+/* ── STYLES SPÉCIFIQUES : GUIDE & PAGES LÉGALES ── */
+
+/* 1. Correction des titres cachés par le header */
+main {
+    padding-top: calc(var(--hh) + 40px);
+    background-color: #fff;
+    min-height: 80vh;
+}
+
+/* 2. FAQ : Restauration des titres et du "+" */
+.faq-block-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--orange); margin-bottom: 16px;
+}
+
+summary.faq-question::after {
+    content: '';
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    background-color: var(--orange);
+    border-radius: 50%;
+    /* Icône + en SVG */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cline x1='10' y1='4' x2='10' y2='16' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='4' y1='10' x2='16' y2='10' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-size: contain;
+    transition: transform 0.25s ease;
+}
+
+details[open] summary.faq-question::after {
+    transform: rotate(45deg); /* Le + devient un x */
+}
+
+/* 3. Guide & Checklist : Restauration de la mise en page */
+.guide-wrap { max-width: 750px; margin: 0 auto; padding: 0 1.5rem; color: var(--dark); }
+.checklist { display: flex; flex-direction: column; margin-bottom: 2.5rem; }
+.check-item { display: grid; grid-template-columns: 40px 1fr; align-items: start; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+.check-box { font-size: 1.4rem; font-weight: 800; line-height: 1; }
+.check-title { display: block; font-size: 1.1rem; font-weight: 800; color: var(--dark); margin-bottom: 2px; }
+.check-desc { font-size: 0.95rem; color: #334155; line-height: 1.4; margin: 0; }
+
+/* 4. Autorités (Horizontal) */
+.authority-box { display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 15px; }
+.org-list { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+.org-name { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--blue); border-bottom: 2px solid var(--orange); line-height: 1.2; }
+
+/* 5. Impression A4 */
+@media print {
+    @page { size: A4; margin: 15mm 10mm; }
+    header, footer, .cta-container, .secondary-actions, .back-link, .faq-cta { display: none !important; }
+    main { padding: 0 !important; margin: 0 !important; }
+    .print-only { display: block !important; }
+    .print-footer-info { 
+        display: flex !important; justify-content: space-between; align-items: flex-start; 
+        border-top: 1.5px solid var(--blue); padding-top: 15px; margin-top: 40px; width: 100%; 
+    }
+}
