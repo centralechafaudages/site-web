@@ -1,9 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════
    Central Échafaudages — style.css 
-   (Isolation Index vs Pages Standards)
+   (Restauration Totale : Index, Guide, FAQ)
 ═══════════════════════════════════════════════════════════════ */
 
-/* ── 1. BASE COMMUNAUTAIRE ──────────────────────────────────── */
+/* ── 1. BASE COMMUNAUTAIRE (Reset & Variables) ──────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -20,7 +20,7 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: var(--dark);
 .container { max-width: var(--w); margin: 0 auto; width: 100%; padding: 0 1.5rem; }
 .hidden { display: none !important; }
 
-/* ── 2. HEADER (Fixe) ───────────────────────────────────────── */
+/* ── 2. HEADER (Fixe & Universel) ─────────────────────────── */
 header { position: fixed; top: 0; width: 100%; z-index: 500; background: #fff; border-bottom: 1px solid var(--border); height: var(--hh); display: flex; align-items: center; }
 .header-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; }
 .logo-img { height: 2rem; width: auto; display: block; }
@@ -31,7 +31,8 @@ header { position: fixed; top: 0; width: 100%; z-index: 500; background: #fff; b
     header.home-active .btn-call-header { display: none; }
 }
 
-/* ── 3. STYLE SPÉCIFIQUE À LA PAGE D'ACCUEIL (.page-home) ───── */
+/* ── 3. LOGIQUE PAGE ACCUEIL (.page-home) ──────────────────── */
+/* On ne touche pas au scroll-snap de l'index */
 body.page-home html { scroll-snap-type: y proximity; }
 @media (min-width: 769px) { body.page-home html { scroll-snap-type: y mandatory; } }
 
@@ -40,24 +41,31 @@ body.page-home section {
     min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; 
     padding-top: var(--hh); 
 }
+/* Styles spécifiques Home (Cards, Badge) */
+.stamp-wrap { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.stamp-bg { fill: var(--orange); }
+.card-dark { background: var(--dark); padding: 2rem; border-radius: 1rem; color: #fff; }
 
-/* ── 4. STYLE PAGES STANDARDS (Guide, FAQ, CGV) ─────────────── */
+/* ── 4. LOGIQUE PAGES STANDARDS (.page-standard) ────────────── */
+/* (Guide, FAQ, CGV, Mentions) */
 body.page-standard main {
     padding-top: calc(var(--hh) + 40px); /* Libère l'espace sous le header */
     padding-bottom: 80px;
 }
-
 body.page-standard h1 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 8vw, 3rem); font-weight: 800; color: var(--blue); text-transform: uppercase; line-height: 1.1; margin-bottom: 1rem; }
 
-/* Checklist (Guide) */
+/* Checklist du GUIDE */
 .guide-wrap { max-width: 750px; margin: 0 auto; }
 .checklist { display: flex; flex-direction: column; margin-bottom: 2.5rem; }
 .check-item { display: grid; grid-template-columns: 45px 1fr; align-items: start; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
 .check-box { font-size: 1.5rem; font-weight: 800; color: var(--blue); line-height: 1; }
-.check-item:nth-child(n+5) .check-box { color: var(--orange); }
+.check-item:nth-child(n+5) .check-box { color: var(--orange); } /* Points 5 à 7 en orange */
+.check-title { display: block; font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
+.check-desc { font-size: 0.95rem; color: #334155; line-height: 1.4; }
 
-/* FAQ */
-.faq-block-title { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; color: var(--orange); margin: 3rem 0 1rem; }
+/* Spécificités FAQ */
+.faq-block-title { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; color: var(--orange); margin: 3.5rem 0 1.5rem; }
+.faq-block:first-of-type .faq-block-title { margin-top: 0; }
 summary.faq-question { list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 0; font-size: 1.05rem; font-weight: 700; cursor: pointer; border-bottom: 1px solid var(--border); }
 summary.faq-question::after {
     content: ''; width: 22px; height: 22px; background-color: var(--orange); border-radius: 50%;
@@ -66,12 +74,14 @@ summary.faq-question::after {
 }
 details[open] summary.faq-question::after { transform: rotate(45deg); }
 
-/* ── 5. IMPRESSION & CTA ────────────────────────────────────── */
+/* ── 5. ACTIONS & IMPRESSION ──────────────────────────────── */
+.cta-container { text-align: center; padding-top: 3rem; border-top: 1px solid var(--border); }
+.cta-btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--orange); color: #fff; padding: 1rem 2rem; border-radius: 10px; font-weight: 800; text-decoration: none; text-transform: uppercase; }
 .print-btn { background: none; border: none; color: var(--mid); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-.cta-btn-primary { display: inline-flex; align-items: center; background: var(--orange); color: #fff; padding: 1rem 2rem; border-radius: 10px; font-weight: 800; text-decoration: none; text-transform: uppercase; }
 
 footer { background: var(--dark); color: #fff; padding: 3rem 0; text-align: center; }
 .footer-links { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+.footer-links .sep { color: rgba(255,255,255,0.2); }
 
 .print-only { display: none; }
 @media print {
