@@ -1,8 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════
-   Central Échafaudages — style.css (V. Finale 17/04/2026)
+   Central Échafaudages — style.css (V. Finale Corrigée)
 ═══════════════════════════════════════════════════════════════ */
 
-/* ── 1. BASE & RESET ────────────────────────────────────────── */
+/* ── BASE & RESET ────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -16,74 +16,54 @@
 }
 
 html { scroll-behavior: smooth; }
-html.no-snap { scroll-snap-type: none !important; }
-
-body {
-    font-family: 'DM Sans', sans-serif;
-    background: #fff; color: var(--dark);
-    line-height: 1.6; overflow-x: hidden;
-}
-
+body { font-family: 'DM Sans', sans-serif; background: #fff; color: var(--dark); line-height: 1.6; overflow-x: hidden; }
 .container { max-width: var(--w); margin: 0 auto; width: 100%; padding: 0 1.5rem; }
 .hidden { display: none !important; }
 
-/* ── 2. HEADER & NAVIGATION ─────────────────────────────────── */
-header {
-    position: fixed; top: 0; width: 100%; z-index: 200;
-    background: #fff; border-bottom: 1px solid var(--border);
-    height: var(--hh); display: flex; align-items: center;
-}
+/* ── HEADER (Commun) ─────────────────────────────────────── */
+header { position: fixed; top: 0; width: 100%; z-index: 500; background: #fff; border-bottom: 1px solid var(--border); height: var(--hh); display: flex; align-items: center; }
 .header-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; }
 .logo-img { height: 2rem; width: auto; display: block; }
+.btn-call-header { background: var(--orange); color: #fff; padding: 0.55rem 1.2rem; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 0.9rem; }
 
 @media (max-width: 768px) {
     header.home-active .header-inner { justify-content: center; }
     header.home-active .btn-call-header { display: none; }
 }
 
-.btn-call-header {
-    background: var(--orange); color: #fff; padding: 0.55rem 1.2rem;
-    border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 0.9rem;
+/* ── STRUCTURE INDEX.HTML (Restauration) ────────────────── */
+html:not(.no-snap) { scroll-snap-type: y proximity; }
+@media (min-width: 769px) { html:not(.no-snap) { scroll-snap-type: y mandatory; } }
+
+section { 
+    scroll-snap-align: start; scroll-snap-stop: always; 
+    min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; 
+    padding-top: var(--hh); 
 }
 
-/* ── 3. STRUCTURE DES PAGES (Correction Titres Mangés) ───────── */
-main {
-    padding-top: calc(var(--hh) + 30px);
-    padding-bottom: 60px;
+/* Styles spécifiques Home/Sections (Badge, Cartes, etc. conservés de ton original) */
+.stamp-wrap { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.stamp-bg { fill: var(--orange); }
+.card-dark { background: var(--dark); padding: 2rem; border-radius: 1rem; color: #fff; }
+
+/* ── STRUCTURE PAGES LÉGALES & GUIDE (Correction titres) ─── */
+html.no-snap section { min-height: auto; scroll-snap-align: none; }
+
+/* On n'applique le padding-top qu'aux pages qui n'utilisent pas de <section> */
+main:not(:has(section)) { 
+    padding-top: calc(var(--hh) + 40px); 
+    padding-bottom: 80px;
 }
 
-h1 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 8vw, 3rem); font-weight: 800; color: var(--blue); text-transform: uppercase; line-height: 1; }
-h2 { font-family: 'Outfit', sans-serif; font-size: clamp(1.35rem, 4vw, 2.2rem); font-weight: 700; color: var(--blue); }
+/* ── TYPOGRAPHIE ── */
+h1 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 8vw, 3rem); font-weight: 800; color: var(--blue); text-transform: uppercase; line-height: 1.1; }
+h2 { font-family: 'Outfit', sans-serif; font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 700; color: var(--blue); margin-bottom: 1.5rem; }
 
-/* ── 4. CHECKLIST SÉCURITÉ (guide-echafaudage.html) ─────────── */
-.guide-wrap { max-width: 750px; margin: 0 auto; padding: 0 1.5rem; }
-.guide-header { text-align: center; margin-bottom: 2rem; }
-
-.checklist { display: flex; flex-direction: column; margin-bottom: 2.5rem; }
-.check-item {
-    display: grid; grid-template-columns: 40px 1fr;
-    align-items: start; padding: 0.7rem 0;
-    border-bottom: 1px solid var(--border);
-}
-.check-box { font-size: 1.4rem; font-weight: 800; line-height: 1; }
-.check-item:nth-child(-n+4) .check-box { color: var(--blue); }
-.check-item:nth-child(n+5) .check-box { color: var(--orange); }
-
-.check-body { padding-left: 5px; }
-.check-title { display: block; font-size: 1.1rem; font-weight: 800; color: var(--dark); margin-bottom: 2px; }
-.check-desc { font-size: 0.95rem; color: #334155; line-height: 1.4; }
-
-.warning-zone { margin-bottom: 2.5rem; text-align: center; }
-.warning-kicker { color: #b91c1c; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; text-transform: uppercase; margin-bottom: 0.8rem; display: block; }
-.warning-text { font-size: 1rem; line-height: 1.5; text-align: justify; margin-bottom: 1.2rem; }
-
-.org-name { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--blue); border-bottom: 2px solid var(--orange); line-height: 1.2; }
-
-/* ── 5. FAQ (faq.html) ──────────────────────────────────────── */
+/* ── FAQ (Restauration icônes + Espacement) ── */
 .faq-block-title {
     font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 800;
     text-transform: uppercase; letter-spacing: 0.08em; color: var(--orange);
-    margin-top: 3rem; margin-bottom: 1rem; display: block;
+    margin: 3.5rem 0 1.5rem; display: block;
 }
 .faq-block:first-of-type .faq-block-title { margin-top: 0; }
 
@@ -99,37 +79,32 @@ summary.faq-question::after {
 details[open] summary.faq-question::after { transform: rotate(45deg); }
 .faq-answer { padding: 1rem 0; border-bottom: 1px solid var(--border); }
 
-/* ── 6. BOUTONS & CTA ───────────────────────────────────────── */
-.cta-container { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border); }
-.cta-btn-primary {
-    display: inline-flex; align-items: center; gap: 10px; background: var(--orange);
-    color: #fff; padding: 1rem 2rem; border-radius: 10px; font-weight: 800;
-    text-decoration: none; text-transform: uppercase;
-}
-.back-link { color: var(--orange); text-decoration: none; font-weight: 700; display: inline-block; margin-top: 20px; }
-.print-btn { background: none; border: none; color: var(--mid); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+/* ── GUIDE / CHECKLIST (Restauration style) ── */
+.guide-wrap { max-width: 750px; margin: 0 auto; }
+.checklist { display: flex; flex-direction: column; margin-bottom: 2.5rem; }
+.check-item { display: grid; grid-template-columns: 45px 1fr; align-items: start; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+.check-box { font-size: 1.5rem; font-weight: 800; line-height: 1; color: var(--blue); }
+.check-item:nth-child(n+5) .check-box { color: var(--orange); }
+.check-title { display: block; font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
 
-/* ── 7. FOOTER ──────────────────────────────────────────────── */
+.warning-kicker { color: #b91c1c; font-family: 'Outfit', sans-serif; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 10px; }
+.org-name { font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--blue); border-bottom: 2px solid var(--orange); margin: 0 10px; }
+
+/* ── FOOTER & CTA ── */
 footer { background: var(--dark); color: #fff; padding: 3rem 0; text-align: center; }
-.footer-inner { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
-.footer-brand { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.4rem; }
-.footer-links { display: flex; gap: 0.5rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.footer-links { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
 .footer-links .sep { color: rgba(255,255,255,0.2); }
 .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem; }
-.footer-copy { color: rgba(255,255,255,0.3); font-size: 0.7rem; margin-top: 10px; }
+.cta-container { text-align: center; padding-top: 3rem; border-top: 1px solid var(--border); }
+.cta-btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--orange); color: #fff; padding: 1rem 2rem; border-radius: 10px; font-weight: 800; text-decoration: none; text-transform: uppercase; }
+.print-btn { background: none; border: none; color: var(--mid); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
 
-/* ── 8. IMPRESSION A4 ───────────────────────────────────────── */
+/* ── IMPRESSION A4 ── */
 .print-only { display: none; }
 @media print {
     @page { size: A4; margin: 15mm 10mm; }
     header, footer, .cta-container, .secondary-actions, .back-link, .faq-cta { display: none !important; }
-    main { padding: 0 !important; }
+    main { padding-top: 0 !important; }
     .print-only { display: block !important; }
-    .print-footer-info {
-        display: flex !important; justify-content: space-between; border-top: 1.5px solid var(--blue);
-        padding-top: 15px; margin-top: 40px; width: 100%; page-break-inside: avoid;
-    }
-    .print-info-left strong { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--blue); text-transform: uppercase; display: block; }
-    .print-info-right { text-align: right; font-size: 0.8rem; line-height: 1.4; font-weight: 600; }
-    .check-item { padding: 0.45rem 0; }
+    .print-footer-info { display: flex !important; justify-content: space-between; border-top: 1.5px solid var(--blue); padding-top: 15px; margin-top: 40px; }
 }
