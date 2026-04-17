@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="no-snap">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,38 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
-    <style>
-        html { scroll-snap-type: none !important; }
-        main {
-            padding-top: calc(var(--hh) + 40px);
-            padding-bottom: 80px;
-            background-color: #fff;
-        }
-        .legal-content { max-width: 850px; margin: 0 auto; color: var(--dark); }
-        .legal-header { margin-bottom: 50px; text-align: center; }
-        .legal-header h1 { color: var(--blue); font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 10px; }
-        .legal-header p  { font-size: 0.9rem; color: var(--mid); font-weight: 700; }
-        .article { margin-bottom: 35px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-        .article h2 {
-            color: var(--blue); font-size: 1.25rem; margin-bottom: 15px;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .article h2::before {
-            content: ""; display: inline-block; width: 8px; height: 24px;
-            background-color: var(--orange); border-radius: 4px; flex-shrink: 0;
-        }
-        .article p, .article li { font-size: 1.05rem; line-height: 1.7; color: #334155; }
-        .article ul { margin-bottom: 15px; padding-left: 20px; }
-        .article li { margin-bottom: 8px; list-style-type: square; color: var(--orange); }
-        .article li span { color: #334155; }
-        .back-link {
-            display: inline-flex; align-items: center; margin-top: 40px;
-            color: var(--orange); text-decoration: none; font-weight: 700;
-            transition: transform 0.2s;
-        }
-        .back-link:hover { transform: translateX(-5px); }
-        @media print { header, footer, .back-link { display: none !important; } main { padding-top: 0; } }
-    </style>
 </head>
 <body>
 
