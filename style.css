@@ -704,11 +704,24 @@ main {
 }
 
 /* 2. FAQ : Restauration des titres et du "+" */
+/* FAQ : Correction de la position des intertitres */
 .faq-block-title {
     font-family: 'Outfit', sans-serif;
-    font-size: 1rem; font-weight: 800;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--orange); margin-bottom: 16px;
+    font-size: 1rem; 
+    font-weight: 800;
+    text-transform: uppercase; 
+    letter-spacing: 0.08em;
+    color: var(--orange);
+    /* On descend le titre par rapport au bloc précédent */
+    margin-top: 3.5rem; 
+    margin-bottom: 1.5rem;
+    padding-top: 10px;
+    display: block;
+}
+
+/* On réduit la marge du tout premier titre pour ne pas créer un trou sous le header */
+.faq-block:first-of-type .faq-block-title {
+    margin-top: 1rem;
 }
 
 summary.faq-question::after {
