@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="no-snap">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,111 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
-    <style>
-        html { scroll-snap-type: none !important; }
-        main {
-            padding-top: calc(var(--hh) + 20px);
-            padding-bottom: 60px;
-            background-color: #fff;
-        }
-        .guide-wrap {
-            max-width: 750px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            color: var(--dark);
-        }
-
-        .print-only { display: none; }
-
-        /* --- En-tête Écran --- */
-        .guide-header { text-align: center; margin-bottom: 1.5rem; }
-        .guide-header h1 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: clamp(2.2rem, 8vw, 3rem);
-            color: var(--blue);
-            text-transform: uppercase;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        /* --- Checklist --- */
-        .checklist {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 2rem;
-        }
-        .check-item {
-            display: grid;
-            grid-template-columns: 40px 1fr;
-            align-items: start;
-            padding: 0.7rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .check-box { font-size: 1.4rem; font-weight: 800; line-height: 1; }
-        .check-item:nth-child(-n+4) .check-box { color: var(--blue); }
-        .check-item:nth-child(n+5) .check-box { color: var(--orange); }
-
-        .check-body { padding-left: 5px; }
-        .check-title { display: block; font-size: 1.1rem; font-weight: 800; color: var(--dark); margin-bottom: 2px; }
-        .check-desc { font-size: 0.95rem; color: #334155; line-height: 1.4; margin: 0; }
-
-        /* --- Zone Avertissement --- */
-        .warning-zone { margin-bottom: 2.5rem; text-align: center; }
-        .warning-kicker { color: #b91c1c; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; text-transform: uppercase; margin-bottom: 0.8rem; display: block; }
-        .warning-text { font-size: 1rem; line-height: 1.5; text-align: justify; margin-bottom: 1.2rem; color: #334155; }
-
-        .authority-box { display: flex; flex-direction: column; gap: 8px; align-items: center; }
-        .authority-label { font-size: 0.8rem; font-weight: 700; color: var(--mid); text-transform: uppercase; }
-        .org-name { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--blue); border-bottom: 2px solid var(--orange); line-height: 1.2; }
-
-        /* --- Actions --- */
-        .cta-container { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border); }
-        .cta-btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--orange); color: #fff; padding: 1rem 2rem; border-radius: 10px; font-weight: 800; font-size: 1.1rem; text-decoration: none; text-transform: uppercase; }
-        
-        .secondary-actions { margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .back-link { color: var(--orange); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
-        .print-btn { background: none; border: none; color: var(--mid); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-
-        /* --- CONFIGURATION IMPRESSION A4 --- */
-        @media print {
-            @page { 
-                size: A4; 
-                margin: 15mm 10mm; /* Optimisation selon vos tests */
-            }
-            header, footer, .cta-container, .secondary-actions { display: none !important; }
-            main { padding: 0 !important; margin: 0 !important; }
-            
-            .print-only { display: block !important; }
-            
-            /* Signature de fin isolée */
-            .print-footer-info {
-                display: flex !important;
-                justify-content: space-between;
-                align-items: flex-start;
-                border-top: 1.5px solid var(--blue);
-                padding-top: 15px;
-                margin-top: 40px; /* Espace demandé au dessus de la signature */
-                width: 100%;
-                page-break-inside: avoid;
-            }
-            .print-info-left { text-align: left; }
-            .print-info-left strong { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--blue); text-transform: uppercase; display: block; }
-            .print-info-left span { font-size: 0.8rem; color: #475569; font-weight: 700; }
-            
-            .print-info-right { text-align: right; font-size: 0.8rem; color: #334155; line-height: 1.4; font-weight: 600; }
-            
-            .checklist { margin-bottom: 1rem; }
-            .check-item { padding: 0.45rem 0; } /* Compression print */
-            .warning-zone { margin-bottom: 1.5rem; }
-            .warning-text { margin-bottom: 1rem; }
-        }
-
-        @media (max-width: 600px) {
-            .check-item { padding: 0.8rem 0; }
-            .warning-text { text-align: left; }
-        }
-    </style>
 </head>
 <body>
 
